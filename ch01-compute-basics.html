@@ -437,7 +437,7 @@ Bytes ≈ K · N × 2              <span class="cm">仅权重，激活可忽略<
       <text x="155" y="179" font-size="10" text-anchor="middle" fill="currentColor">4</text>
       <rect x="185" y="165" width="45" height="20" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
       <text x="207" y="179" font-size="10" text-anchor="middle" fill="currentColor">3</text>
-      <text x="240" y="179" font-size="10" fill="currentColor" opacity=".65">1 B &#183; 前向用</text>
+      <text x="253" y="179" font-size="10" fill="currentColor" opacity=".65">1 B &#183; 前向用</text>
 
       <text x="102" y="207" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">FP8 E5M2</text>
       <rect x="110" y="192" width="15" height="18" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
@@ -445,7 +445,7 @@ Bytes ≈ K · N × 2              <span class="cm">仅权重，激活可忽略<
       <text x="162" y="205" font-size="10" text-anchor="middle" fill="currentColor">5</text>
       <rect x="200" y="192" width="30" height="18" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
       <text x="215" y="205" font-size="10" text-anchor="middle" fill="currentColor">2</text>
-      <text x="240" y="205" font-size="10" fill="currentColor" opacity=".65">1 B &#183; 梯度用，让出尾数换范围</text>
+      <text x="253" y="205" font-size="10" fill="currentColor" opacity=".65">1 B &#183; 梯度用，让出尾数换范围</text>
     </svg>
     <figcaption>每格代表一个二进制位。BF16 是把 FP32 的尾数砍掉一半、指数位原样保留的结果，因此动态范围不变；FP16 则是牺牲范围换精度，这正是它在训练中需要损失缩放的原因。</figcaption>
   </figure>
@@ -513,7 +513,7 @@ FP8:  70.55×10⁹ × 1 =  70.6 GB   <span class="cm">可以放下</span></pre><
       <rect x="110" y="124" width="240.3" height="26" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.2"/>
       <text x="230" y="141" font-size="11" text-anchor="middle" fill="currentColor">权重 70.6 GB</text>
       <rect x="350.3" y="124" width="34" height="26" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.2" opacity=".9"/>
-      <text x="367" y="167" font-size="9.5" text-anchor="middle" fill="currentColor" opacity=".7">预留 10</text>
+      <text x="367" y="118" font-size="9.5" text-anchor="middle" fill="currentColor" opacity=".7">预留 10</text>
       <rect x="384.3" y="124" width="205.7" height="26" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.2"/>
       <text x="487" y="141" font-size="11" text-anchor="middle" fill="currentColor" font-weight="600">KV Cache 60.4 GB</text>
 
