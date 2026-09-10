@@ -43,7 +43,7 @@
 | 章 | 标题 | 状态 |
 |---|---|---|
 | 第一章 | [计算基础](https://zhuguangbin.github.io/llm-learning-notes/ch01-compute-basics.html) | 已发布 |
-| 第二章 | 模型结构原理 | 大纲 |
+| 第二章 | [模型结构原理](https://zhuguangbin.github.io/llm-learning-notes/ch02-model-architecture.html) | 已发布 |
 | 第三章 | 推理系统 | 大纲（含八阶段入门路径） |
 | 第四章 | 训练系统 | 大纲 |
 | 第五章 | PyTorch 与 CUDA 工程 | 大纲 |
