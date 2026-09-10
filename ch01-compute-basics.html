@@ -166,7 +166,7 @@ details p{font-size:14px}
     <h1>计算基础</h1>
     <p class="clede">本章不涉及数学推导，目标是建立成本直觉：看到任意模型与任意硬件，能在数十秒内判断显存是否放得下、瓶颈位于何处、训练需要多长时间。</p>
     <div class="cmeta">
-      <span><b>前置</b> 无</span>
+      <span><b>前置</b> 无（1.0 节自带）</span>
       <span><b>用时</b> 约半天</span>
       <span><b>产出</b> 三个可脱稿使用的估算公式</span>
       <span><b>验收</b> 能估算单卡可支持的并发规模</span>
@@ -177,6 +177,7 @@ details p{font-size:14px}
 <div class="wrap shell">
   <nav class="side">
     <h4>本章目录</h4>
+    <a href="#s0"><span class="sn">1.0</span>从神经网络到矩阵乘法</a>
     <a href="#s1"><span class="sn">1.1</span>矩阵乘法的成本模型</a>
     <a href="#s2"><span class="sn">1.2</span>算术强度与性能拐点</a>
     <a href="#s3"><span class="sn">1.3</span>反向传播的三倍关系</a>
@@ -196,9 +197,70 @@ details p{font-size:14px}
     <p>本章统一采用十进制表示存储容量，即 1 GB = 10<sup>9</sup> 字节，与显卡标称容量的口径一致；涉及缓存分块时使用 KiB = 1024 字节。混用两种口径会带来约百分之七的偏差，在容量规划中足以导致误判，因此建议在实际工作中也明确声明所用口径。</p>
   </div>
 
+  <h2 id="s0"><span class="sn">1.0</span>从神经网络到矩阵乘法</h2>
+
+  <p>本节回答一个前提问题：为什么大模型的计算可以归结为矩阵乘法，以及 M、K、N 三个符号在实际模型中分别对应什么。理解这一节之后，后续全部公式都可以自行推导，而不必记忆。</p>
+
+  <h3>第一步：一个神经元是一次加权求和</h3>
+
+  <p>神经网络中一个输出神经元的计算方式，是将所有输入分别乘以各自的权重后求和：</p>
+
+  <div class="fml"><pre>y = x₁w₁ + x₂w₂ + ⋯ + x_K w_K</pre></div>
+
+  <p>这即是一次点积运算。</p>
+
+  <h3>第二步：一层是向量与矩阵相乘</h3>
+
+  <p>一层通常包含 N 个输出神经元，每个神经元拥有自己的一组权重。将这 N 组权重按列排列，即得到一个 K×N 的权重矩阵 W，整层的计算写作：</p>
+
+  <div class="fml"><pre>y (1×N) = x (1×K) @ W (K×N)</pre></div>
+
+  <div class="key">
+    <span class="kt">关键对应关系</span>
+    <p><b>矩阵 W 就是模型参数本身。</b>通常所说的「70B 参数」，指的正是模型中所有这些权重矩阵的元素总数。后续「每个参数消耗多少次运算」之类的表述，都建立在这一对应关系之上。</p>
+  </div>
+
+  <h3>第三步：多个 token 一起计算，即矩阵与矩阵相乘</h3>
+
+  <p>实际推理与训练都会同时处理多个 token。将这些 token 的向量按行堆叠成矩阵，整层计算即成为标准的矩阵乘法：</p>
+
+  <div class="fml"><pre>Y (M×N) = X (M×K) @ W (K×N)</pre></div>
+
+  <p>至此，M、K、N 三个符号的含义可以明确：</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>符号</th><th>含义</th><th>在大模型中对应什么</th></tr></thead>
+    <tbody>
+      <tr><td class="num"><b>M</b></td><td>一次计算的 token 数量</td><td>prefill 阶段等于序列长度；decode 阶段等于批大小</td></tr>
+      <tr><td class="num"><b>K</b></td><td>输入维度</td><td>上一层的输出宽度，通常为隐藏维度</td></tr>
+      <tr><td class="num"><b>N</b></td><td>输出维度</td><td>本层的输出宽度</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><b>其中只有 M 由请求决定，K 与 N 由模型结构固定。</b>这一点在 1.2 节会再次出现：decode 阶段的算术强度之所以等于批大小，正是因为三个维度中只有 M 在变化。</p>
+
+  <h3>Transformer 中的实际形状</h3>
+
+  <p>以 Llama-3-70B（隐藏维度 8192）为例，每一层中带参数的运算全部是上述形式：</p>
+
+  <div class="fml"><pre>Q 投影        X (M×8192)  @ W (8192×8192)
+K / V 投影    X (M×8192)  @ W (8192×1024)    <span class="cm">采用 GQA，故输出维度较窄</span>
+O 投影        X (M×8192)  @ W (8192×8192)
+FFN gate/up   X (M×8192)  @ W (8192×28672)
+FFN down      X (M×28672) @ W (28672×8192)
+输出层         X (M×8192)  @ W (8192×128256)</pre></div>
+
+  <p>不属于矩阵乘法的部分包括 softmax、RMSNorm、激活函数与 RoPE 旋转，它们均为逐元素运算或规约运算，在浮点运算量中占比很低。需要注意的是，这些操作虽然算力开销小，却往往是带宽受限的，因此在内核融合中具有重要意义——这一点将在第五章展开。</p>
+
+  <div class="warn">
+    <span class="kt">本章需要与不需要的前置知识</span>
+    <p>本章<b>不需要</b>了解注意力机制的原理、RoPE、GQA 或 MoE 的工作方式，这些属于第二章的内容。本章只需要建立「一层即 <code>Y = XW</code>，权重矩阵即模型参数」这一认识。</p>
+    <p>同样地，1.6 节 KV Cache 公式中的层数、KV 头数与头维度，在本章中仅作为可从 <code>config.json</code> 直接读取的数字使用。<b>估算字节数不需要理解这些参数的语义</b>；待第二章讲解 GQA 之后，自然会明白为何 KV 头数是推理成本中唯一可直接调节的项。</p>
+  </div>
+
   <h2 id="s1"><span class="sn">1.1</span>矩阵乘法的成本模型</h2>
 
-  <p>Transformer 中绝大部分计算是矩阵乘法，因此成本模型只需要一个。设 <code>A</code> 的形状为 M×K，<code>B</code> 的形状为 K×N，二者相乘得到 M×N 的输出矩阵。输出中的每个元素是 K 项乘积之和，即 K 次乘法与 K 次加法，共 2K 次浮点运算。输出共有 M×N 个元素，因此：</p>
+  <p>由 1.0 节可知，模型中带参数的运算全部是 <code>Y = XW</code> 形式的矩阵乘法，因此成本模型只需要一个。设左矩阵形状为 M×K，右矩阵形状为 K×N，二者相乘得到 M×N 的输出。输出中的每个元素是 K 项乘积之和，即 K 次乘法与 K 次加法，共 2K 次浮点运算；输出共有 M×N 个元素，因此：</p>
 
   <div class="fml"><pre>FLOPs = 2 · M · N · K        <span class="cm">← 系数 2 来自乘法与加法各计一次</span>
 Bytes = (M·K + K·N + M·N) × 每元素字节数</pre></div>
@@ -208,6 +270,12 @@ Bytes = (M·K + K·N + M·N) × 每元素字节数</pre></div>
   <div class="fml"><pre>算术强度 (arithmetic intensity) = FLOPs / Bytes      <span class="cm">单位：FLOP/Byte</span></pre></div>
 
   <p>其物理含义是：<b>每从显存搬运一个字节的数据，能够换来多少次浮点运算</b>。这个比值决定了一次计算究竟受限于硬件的算力还是显存带宽，是后续全部性能分析的共同坐标。</p>
+
+  <p>此处还有一个换算关系值得先记下，1.3 节会用到。一层的参数量即权重矩阵的元素个数 <code>K·N</code>，因此该层处理 M 个 token 的前向计算量为：</p>
+
+  <div class="fml"><pre>2 · M · N · K = 2 × (K·N) × M = 2 × 参数量 × token 数</pre></div>
+
+  <p>也就是说，<b>「按矩阵形状计算」与「按参数量计算」是同一件事的两种写法</b>，可以随时互相验算。</p>
 
   <h2 id="s2"><span class="sn">1.2</span>算术强度与性能拐点</h2>
 
@@ -341,18 +409,78 @@ Bytes ≈ K · N × 2              <span class="cm">仅权重，激活可忽略<
 
   <h2 id="s3"><span class="sn">1.3</span>反向传播的三倍关系</h2>
 
-  <p>训练一步包含前向与反向两个过程，其计算量存在固定的比例关系：</p>
+  <p>训练一步包含前向与反向两个过程，其计算量之比恒为 1:2。这一比例并非经验系数，而是可以直接数出来的，本节给出推导。</p>
 
-  <ul>
-    <li><b>前向传播</b>：每个参数参与一次乘加运算，因此每个 token 约需 <code>2N</code> 次浮点运算，N 为参数量。</li>
-    <li><b>反向传播</b>：需要分别计算两个梯度——对输入的梯度（用于向前一层传递）与对权重的梯度（用于参数更新），每项各需 <code>2N</code>，合计 <code>4N</code>。</li>
-  </ul>
+  <h3>前向：每个参数每个 token 消耗 2 次浮点运算</h3>
 
-  <p>二者相加，每个 token 约需 <code>6N</code> 次浮点运算。乘以训练数据总量 D，得到训练算力的经验公式：</p>
+  <p>考察权重矩阵中的<b>任意一个</b>权重 <code>w_ij</code>。在计算一个 token 的 <code>Y = XW</code> 时，它被使用的次数恰好为一次：与输入分量相乘得到 <code>x_i · w_ij</code>，随后累加至输出分量 <code>y_j</code>。这是一次乘法与一次加法，共 2 次浮点运算。</p>
+
+  <p>由于每个参数、每个 token 恒定消耗 2 次运算，参数量为 N 的模型每个 token 的前向计算量即为 <code>2N</code>。这与 1.1 节末尾的换算关系完全一致。</p>
+
+  <h3>反向：需要计算两个梯度，各自都是一次同规模的矩阵乘法</h3>
+
+  <p>反向传播在每一层接收上游传来的梯度 <code>dY</code>，并需要计算两样东西——一个继续向前传递，一个用于更新本层参数。二者都是矩阵乘法，且与前向涉及相同的三个维度：</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 250" role="img" aria-label="三次矩阵乘法对照图：前向计算输出、反向计算传递给上一层的梯度、反向计算本层权重梯度，三者涉及相同的 M、N、K 三个维度，浮点运算量均为 2MNK，因此前向与反向的比例为一比二">
+      <text x="20" y="24" font-size="11.5" font-weight="600" fill="currentColor">训练一步中的三次矩阵乘法</text>
+      <line x1="20" y1="34" x2="620" y2="34" stroke="currentColor" stroke-width="1" opacity=".25"/>
+
+      <text x="138" y="72" font-size="11.5" text-anchor="end" fill="var(--blue)" font-weight="600">前向</text>
+      <rect x="150" y="54" width="78" height="30" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.2"/>
+      <text x="189" y="73" font-size="11" text-anchor="middle" fill="currentColor">X (M×K)</text>
+      <text x="238" y="74" font-size="13" text-anchor="middle" fill="currentColor" opacity=".6">@</text>
+      <rect x="248" y="54" width="78" height="30" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.2" opacity=".9"/>
+      <text x="287" y="73" font-size="11" text-anchor="middle" fill="currentColor">W (K×N)</text>
+      <text x="336" y="74" font-size="13" text-anchor="middle" fill="currentColor" opacity=".6">=</text>
+      <rect x="346" y="54" width="78" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 2" opacity=".7"/>
+      <text x="385" y="73" font-size="11" text-anchor="middle" fill="currentColor">Y (M×N)</text>
+      <text x="442" y="73" font-size="11.5" fill="var(--blue)" font-weight="600">2·M·N·K</text>
+      <text x="528" y="73" font-size="10.5" fill="currentColor" opacity=".7">→ 每 token 2N</text>
+
+      <text x="138" y="132" font-size="11.5" text-anchor="end" fill="var(--amber)" font-weight="600">反向 ①</text>
+      <text x="138" y="147" font-size="9.5" text-anchor="end" fill="currentColor" opacity=".65">传给上一层</text>
+      <rect x="150" y="114" width="78" height="30" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.2"/>
+      <text x="189" y="133" font-size="11" text-anchor="middle" fill="currentColor">dY (M×N)</text>
+      <text x="238" y="134" font-size="13" text-anchor="middle" fill="currentColor" opacity=".6">@</text>
+      <rect x="248" y="114" width="78" height="30" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.2" opacity=".9"/>
+      <text x="287" y="133" font-size="11" text-anchor="middle" fill="currentColor">Wᵀ (N×K)</text>
+      <text x="336" y="134" font-size="13" text-anchor="middle" fill="currentColor" opacity=".6">=</text>
+      <rect x="346" y="114" width="78" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 2" opacity=".7"/>
+      <text x="385" y="133" font-size="11" text-anchor="middle" fill="currentColor">dX (M×K)</text>
+      <text x="442" y="133" font-size="11.5" fill="var(--amber)" font-weight="600">2·M·N·K</text>
+      <text x="528" y="133" font-size="10.5" fill="currentColor" opacity=".7">→ 每 token 2N</text>
+
+      <text x="138" y="192" font-size="11.5" text-anchor="end" fill="var(--amber)" font-weight="600">反向 ②</text>
+      <text x="138" y="207" font-size="9.5" text-anchor="end" fill="currentColor" opacity=".65">用于更新参数</text>
+      <rect x="150" y="174" width="78" height="30" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.2" opacity=".9"/>
+      <text x="189" y="193" font-size="11" text-anchor="middle" fill="currentColor">Xᵀ (K×M)</text>
+      <text x="238" y="194" font-size="13" text-anchor="middle" fill="currentColor" opacity=".6">@</text>
+      <rect x="248" y="174" width="78" height="30" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.2"/>
+      <text x="287" y="193" font-size="11" text-anchor="middle" fill="currentColor">dY (M×N)</text>
+      <text x="336" y="194" font-size="13" text-anchor="middle" fill="currentColor" opacity=".6">=</text>
+      <rect x="346" y="174" width="78" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 2" opacity=".7"/>
+      <text x="385" y="193" font-size="11" text-anchor="middle" fill="currentColor">dW (K×N)</text>
+      <text x="442" y="193" font-size="11.5" fill="var(--amber)" font-weight="600">2·M·N·K</text>
+      <text x="528" y="193" font-size="10.5" fill="currentColor" opacity=".7">→ 每 token 2N</text>
+
+      <line x1="20" y1="222" x2="620" y2="222" stroke="currentColor" stroke-width="1" opacity=".25"/>
+      <text x="20" y="240" font-size="11.5" fill="currentColor">三者维度相同、代价相同 → 前向 : 反向 = <tspan font-weight="600">1 : 2</tspan>，合计每 token <tspan font-weight="600" fill="var(--blue)">6N</tspan>，故 <tspan font-weight="600" fill="var(--blue)">C ≈ 6ND</tspan></text>
+    </svg>
+    <figcaption>反向传播之所以恰好是前向的两倍，是因为它需要两个梯度：一个继续向前传递，一个用于更新本层参数。二者与前向涉及同样的 M、N、K，只是沿不同的轴做收缩，因此浮点运算量完全相同。</figcaption>
+  </figure>
+
+  <p>三次矩阵乘法的浮点运算量均为 <code>2·M·N·K</code>，因此反向传播恰为前向的两倍。二者相加，每个 token 约需 <code>6N</code> 次浮点运算。乘以训练数据总量 D，即得训练算力的经验公式：</p>
 
   <div class="fml"><pre>C ≈ 6 · N · D                  <span class="cm">N 为参数量，D 为训练 token 数</span></pre></div>
 
   <p>推理侧只有前向过程，因此生成一个 token 约需 <code>2N</code> 次浮点运算。</p>
+
+  <div class="warn">
+    <span class="kt">公式的适用口径</span>
+    <p><code>6ND</code> 只统计了带参数的矩阵乘法，未计入注意力内部的 <code>QKᵀ</code> 与分数乘 V 这两次运算。这两次运算的两个操作数都是激活值而非参数，其计算量随序列长度按 <b>S²</b> 增长，无法用参数量表示。</p>
+    <p>在常见的序列长度下该项占比很小，可以忽略；但在长上下文训练中会显著上升，届时需要单独计入。第二章讲解注意力机制时会给出完整的计算方式。</p>
+  </div>
 
   <h3>用法示例</h3>
 
