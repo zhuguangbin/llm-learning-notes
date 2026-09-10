@@ -1,0 +1,637 @@
+<title>计算基础</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&display=swap">
+<style>
+:root{
+  --ground:#F4F6F8; --surface:#FFFFFF; --surface-2:#EBEFF4;
+  --ink:#10151C; --ink-2:#3A4452; --muted:#697687;
+  --line:#D7DEE7; --line-soft:#E4EAF1;
+  --blue:#1B4FD8; --blue-soft:#E7EDFC;
+  --amber:#9A6400; --amber-soft:#FBF0DA;
+  --red:#A81F27;  --red-soft:#FAE7E7;
+  --shadow:0 1px 2px rgba(16,21,28,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ground:#0D1117; --surface:#151B23; --surface-2:#1D242E;
+  --ink:#E8EDF4; --ink-2:#B6C0CE; --muted:#8492A5;
+  --line:#2B3542; --line-soft:#222A35;
+  --blue:#7FA6FF; --blue-soft:#18233C;
+  --amber:#E3A94A; --amber-soft:#2A2213;
+  --red:#F08C90;  --red-soft:#2C1A1C;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}}
+:root[data-theme="dark"]{
+  --ground:#0D1117; --surface:#151B23; --surface-2:#1D242E;
+  --ink:#E8EDF4; --ink-2:#B6C0CE; --muted:#8492A5;
+  --line:#2B3542; --line-soft:#222A35;
+  --blue:#7FA6FF; --blue-soft:#18233C;
+  --amber:#E3A94A; --amber-soft:#2A2213;
+  --red:#F08C90;  --red-soft:#2C1A1C;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Sans","Noto Sans SC",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+
+/* header */
+.chead{background:var(--surface);border-bottom:1px solid var(--line)}
+.chead .wrap{padding-block:30px 26px}
+.crumb{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);margin:0 0 14px;letter-spacing:.04em}
+.crumb a{text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.chapno{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin:0 0 8px}
+h1{font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif;font-size:clamp(28px,4.4vw,40px);
+  font-weight:600;margin:0;letter-spacing:-.015em;line-height:1.18;text-wrap:balance}
+.clede{margin:14px 0 0;max-width:62ch;color:var(--ink-2);font-size:15.5px}
+.cmeta{display:flex;flex-wrap:wrap;gap:10px 26px;margin:20px 0 0;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted)}
+.cmeta b{color:var(--ink-2);font-weight:500}
+
+/* layout */
+.shell{display:grid;grid-template-columns:1fr 216px;gap:52px;align-items:start;padding-block:38px 0}
+.side{position:sticky;top:24px;font-size:13px}
+.side h4{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.side a{display:block;text-decoration:none;color:var(--ink-2);padding:5px 0 5px 12px;
+  border-left:2px solid var(--line-soft);line-height:1.45}
+.side a:hover{color:var(--ink);border-left-color:var(--blue);background:var(--surface-2)}
+.side a .sn{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--blue);margin-right:6px;font-weight:600}
+article{min-width:0;max-width:74ch}
+
+/* prose */
+article h2{font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif;font-size:23px;font-weight:600;
+  margin:44px 0 14px;letter-spacing:-.012em;line-height:1.3;scroll-margin-top:20px}
+article h2:first-child{margin-top:0}
+article h2 .sn{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--blue);margin-right:10px;font-weight:600}
+article h3{font-size:16.5px;font-weight:600;margin:28px 0 10px;letter-spacing:-.005em}
+article p{margin:0 0 15px;color:var(--ink-2)}
+article b,article strong{color:var(--ink);font-weight:600}
+article ul,article ol{margin:0 0 15px;padding-left:22px;color:var(--ink-2)}
+article li{margin-bottom:7px}
+article code{font-family:"IBM Plex Mono",monospace;font-size:13px;background:var(--surface-2);
+  padding:1.5px 5px;border-radius:3px;border:1px solid var(--line-soft);color:var(--ink)}
+
+/* formula block */
+.fml{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--blue);
+  border-radius:5px;padding:15px 18px;margin:0 0 16px;overflow-x:auto;box-shadow:var(--shadow)}
+.fml pre{margin:0;font-family:"IBM Plex Mono",monospace;font-size:13.5px;line-height:1.85;color:var(--ink);white-space:pre}
+.fml .cm{color:var(--muted)}
+
+/* code block */
+pre.code{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:15px 18px;
+  margin:0 0 16px;overflow-x:auto;font-family:"IBM Plex Mono",monospace;font-size:13px;
+  line-height:1.75;color:var(--ink-2);box-shadow:var(--shadow)}
+pre.code .cm{color:var(--muted)}
+pre.code .kw{color:var(--blue)}
+
+/* callout */
+.key{background:var(--blue-soft);border:1px solid var(--line);border-left:3px solid var(--blue);
+  border-radius:5px;padding:15px 18px;margin:0 0 16px}
+.key .kt{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);font-weight:600;display:block;margin-bottom:7px}
+.key p{margin:0 0 9px;color:var(--ink);font-size:14.5px}
+.key p:last-child{margin-bottom:0}
+
+.warn{background:var(--amber-soft);border:1px solid var(--line);border-left:3px solid var(--amber);
+  border-radius:5px;padding:15px 18px;margin:0 0 16px}
+.warn .kt{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);font-weight:600;display:block;margin-bottom:7px}
+.warn p{margin:0 0 9px;color:var(--ink);font-size:14.5px}
+.warn p:last-child{margin-bottom:0}
+
+/* figures */
+.fig{margin:0 0 22px;padding:0}
+.fig svg{display:block;width:100%;max-width:100%;height:auto;
+  background:var(--surface);border:1px solid var(--line);border-radius:5px;
+  padding:10px 8px;box-shadow:var(--shadow);color:var(--ink)}
+.fig figcaption{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.7;
+  padding-left:12px;border-left:2px solid var(--line)}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:5px;background:var(--surface);margin:0 0 16px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:480px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.6}
+thead th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--surface-2);border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+td.num,th.num{font-variant-numeric:tabular-nums;font-family:"IBM Plex Mono",monospace}
+tbody tr.hl td{background:var(--blue-soft)}
+
+/* exercises */
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:18px 20px;margin:0 0 14px;box-shadow:var(--shadow)}
+.ex .exn{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--amber);font-weight:600;margin:0 0 8px}
+.ex p{margin:0 0 10px}
+.ex p:last-of-type{margin-bottom:0}
+details{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+summary{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--blue);
+  font-weight:600;letter-spacing:.04em;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";font-size:11px}
+details[open] summary::before{content:"▾ "}
+details[open] summary{margin-bottom:12px}
+details .fml{margin-bottom:12px}
+details p{font-size:14px}
+
+/* footer nav */
+.cfoot{border-top:2px solid var(--ink);margin-top:52px;padding-block:26px 52px;
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.cfoot .fl{font-size:13.5px;color:var(--muted);max-width:52ch;line-height:1.65}
+.cfoot a.next{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;
+  border:1px solid var(--line);border-radius:5px;padding:12px 18px;background:var(--surface);box-shadow:var(--shadow)}
+.cfoot a.next:hover{border-color:var(--blue)}
+.cfoot a.next .l{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
+.cfoot a.next .t{font-weight:600;color:var(--ink);font-size:15px}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;gap:0}
+  .side{position:static;order:-1;margin-bottom:28px}
+  .side a{display:inline-block;border-left:none;border-bottom:2px solid var(--line-soft);padding:4px 10px 4px 0;margin-right:10px}
+  article{max-width:none}
+}
+</style>
+
+<header class="chead">
+  <div class="wrap">
+    <p class="crumb"><a href="./">LLM 系统工程地图</a> &nbsp;›&nbsp; 第二部分 模块详解 &nbsp;›&nbsp; 第一章</p>
+    <p class="chapno">第一章 · M0</p>
+    <h1>计算基础</h1>
+    <p class="clede">本章不涉及数学推导，目标是建立成本直觉：看到任意模型与任意硬件，能在数十秒内判断显存是否放得下、瓶颈位于何处、训练需要多长时间。</p>
+    <div class="cmeta">
+      <span><b>前置</b> 无</span>
+      <span><b>用时</b> 约半天</span>
+      <span><b>产出</b> 三个可脱稿使用的估算公式</span>
+      <span><b>验收</b> 能估算单卡可支持的并发规模</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap shell">
+  <nav class="side">
+    <h4>本章目录</h4>
+    <a href="#s1"><span class="sn">1.1</span>矩阵乘法的成本模型</a>
+    <a href="#s2"><span class="sn">1.2</span>算术强度与性能拐点</a>
+    <a href="#s3"><span class="sn">1.3</span>反向传播的三倍关系</a>
+    <a href="#s4"><span class="sn">1.4</span>交叉熵与困惑度</a>
+    <a href="#s5"><span class="sn">1.5</span>数值格式</a>
+    <a href="#s6"><span class="sn">1.6</span>三个估算公式</a>
+    <a href="#s7"><span class="sn">1.7</span>完整示例</a>
+    <a href="#s8"><span class="sn">1.8</span>估算工具</a>
+    <a href="#s9"><span class="sn">1.9</span>本章练习</a>
+    <a href="#s10"><span class="sn">1.10</span>小结</a>
+  </nav>
+
+  <article>
+
+  <div class="warn">
+    <span class="kt">单位约定</span>
+    <p>本章统一采用十进制表示存储容量，即 1 GB = 10<sup>9</sup> 字节，与显卡标称容量的口径一致；涉及缓存分块时使用 KiB = 1024 字节。混用两种口径会带来约百分之七的偏差，在容量规划中足以导致误判，因此建议在实际工作中也明确声明所用口径。</p>
+  </div>
+
+  <h2 id="s1"><span class="sn">1.1</span>矩阵乘法的成本模型</h2>
+
+  <p>Transformer 中绝大部分计算是矩阵乘法，因此成本模型只需要一个。设 <code>A</code> 的形状为 M×K，<code>B</code> 的形状为 K×N，二者相乘得到 M×N 的输出矩阵。输出中的每个元素是 K 项乘积之和，即 K 次乘法与 K 次加法，共 2K 次浮点运算。输出共有 M×N 个元素，因此：</p>
+
+  <div class="fml"><pre>FLOPs = 2 · M · N · K        <span class="cm">← 系数 2 来自乘法与加法各计一次</span>
+Bytes = (M·K + K·N + M·N) × 每元素字节数</pre></div>
+
+  <p>其中 Bytes 是这次运算需要从显存读取和写回的数据总量：读入 A 与 B，写出 C。将二者相除，得到本章最重要的概念：</p>
+
+  <div class="fml"><pre>算术强度 (arithmetic intensity) = FLOPs / Bytes      <span class="cm">单位：FLOP/Byte</span></pre></div>
+
+  <p>其物理含义是：<b>每从显存搬运一个字节的数据，能够换来多少次浮点运算</b>。这个比值决定了一次计算究竟受限于硬件的算力还是显存带宽，是后续全部性能分析的共同坐标。</p>
+
+  <h2 id="s2"><span class="sn">1.2</span>算术强度与性能拐点</h2>
+
+  <p>任何一款加速卡都有两个独立的上限：峰值算力与显存带宽。以 H200 SXM 为例：</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>指标</th><th class="num">H200 SXM</th></tr></thead>
+    <tbody>
+      <tr><td>显存容量</td><td class="num">141 GB HBM3e</td></tr>
+      <tr><td>显存带宽</td><td class="num">4.8 TB/s</td></tr>
+      <tr><td>BF16 稠密算力</td><td class="num">≈ 495 TFLOPS</td></tr>
+      <tr><td>FP8 稠密算力</td><td class="num">≈ 990 TFLOPS</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>将峰值算力除以显存带宽，得到该硬件的<b>性能拐点</b>（ridge point）：</p>
+
+  <div class="fml"><pre>495 × 10¹² FLOPS ÷ 4.8 × 10¹² B/s ≈ 103 FLOP/Byte</pre></div>
+
+  <p>这一数值的含义是：只有当计算任务的算术强度超过 103 时，才有可能将算力利用起来；低于该值时，无论硬件算力多强，性能都由显存带宽决定。这就是 Roofline 模型的核心，本章只需掌握这一个数字的用法。</p>
+
+  <h3>两个真实场景的对比</h3>
+
+  <p><b>场景 A：prefill 阶段的大矩阵乘法。</b>设 M = N = K = 4096，采用 BF16：</p>
+
+  <div class="fml"><pre>FLOPs = 2 × 4096³              ≈ 1.37 × 10¹¹
+Bytes = 3 × 4096² × 2          ≈ 1.01 × 10⁸
+算术强度 ≈ 1365 FLOP/Byte      <span class="cm">远高于 103 → 算力受限</span></pre></div>
+
+  <p><b>场景 B：decode 阶段的矩阵向量乘法。</b>每次仅生成一个 token，输入形状为 <code>batch × hidden</code>，而权重矩阵形状为 <code>hidden × out</code>。由于批规模远小于权重矩阵的维度，显存搬运量几乎全部来自权重：</p>
+
+  <div class="fml"><pre>FLOPs ≈ 2 · B · K · N
+Bytes ≈ K · N × 2              <span class="cm">仅权重，激活可忽略</span>
+
+算术强度 ≈ 2·B·K·N / (2·K·N) = B</pre></div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 250" role="img" aria-label="对比图：prefill 阶段激活矩阵与权重矩阵体量相当，decode 阶段激活退化为单行向量，而权重搬运量不变，导致算术强度从 1365 跌至 1">
+      <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <polygon points="0,1 9,5 0,9" fill="currentColor"/></marker></defs>
+
+      <text x="20" y="26" font-size="13" font-weight="600" fill="currentColor">Prefill · 大矩阵乘法</text>
+      <rect x="20" y="38" width="270" height="1" fill="currentColor" opacity=".25"/>
+      <rect x="30" y="58" width="62" height="84" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.5"/>
+      <text x="61" y="104" font-size="10.5" text-anchor="middle" fill="currentColor">激活</text>
+      <text x="61" y="156" font-size="10" text-anchor="middle" fill="currentColor" opacity=".65">4096×4096</text>
+      <text x="104" y="105" font-size="14" text-anchor="middle" fill="currentColor" opacity=".6">×</text>
+      <rect x="116" y="58" width="62" height="84" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5" opacity=".9"/>
+      <text x="147" y="104" font-size="10.5" text-anchor="middle" fill="currentColor">权重</text>
+      <text x="147" y="156" font-size="10" text-anchor="middle" fill="currentColor" opacity=".65">4096×4096</text>
+      <text x="190" y="105" font-size="14" text-anchor="middle" fill="currentColor" opacity=".6">=</text>
+      <rect x="202" y="58" width="62" height="84" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2" opacity=".7"/>
+      <text x="233" y="104" font-size="10.5" text-anchor="middle" fill="currentColor">输出</text>
+      <text x="30" y="188" font-size="11" fill="currentColor" opacity=".8">搬运 101 MB &#183; 计算 1.37×10¹¹</text>
+      <text x="30" y="208" font-size="12" font-weight="600" fill="var(--blue)">算术强度 ≈ 1365 → 算力受限</text>
+
+      <text x="350" y="26" font-size="13" font-weight="600" fill="currentColor">Decode · 矩阵向量乘法</text>
+      <rect x="350" y="38" width="270" height="1" fill="currentColor" opacity=".25"/>
+      <rect x="360" y="97" width="62" height="6" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5"/>
+      <text x="391" y="88" font-size="10.5" text-anchor="middle" fill="currentColor">激活</text>
+      <text x="391" y="156" font-size="10" text-anchor="middle" fill="currentColor" opacity=".65">1×4096</text>
+      <text x="434" y="105" font-size="14" text-anchor="middle" fill="currentColor" opacity=".6">×</text>
+      <rect x="446" y="58" width="62" height="84" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5" opacity=".9"/>
+      <text x="477" y="98" font-size="10.5" text-anchor="middle" fill="currentColor">权重</text>
+      <text x="477" y="114" font-size="10.5" text-anchor="middle" fill="currentColor">不变</text>
+      <text x="477" y="156" font-size="10" text-anchor="middle" fill="currentColor" opacity=".65">4096×4096</text>
+      <text x="520" y="105" font-size="14" text-anchor="middle" fill="currentColor" opacity=".6">=</text>
+      <rect x="532" y="97" width="62" height="6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2" opacity=".7"/>
+      <text x="360" y="188" font-size="11" fill="currentColor" opacity=".8">搬运 34 MB &#183; 计算 3.4×10⁷</text>
+      <text x="360" y="208" font-size="12" font-weight="600" fill="var(--amber)">算术强度 ≈ 1 → 带宽受限</text>
+
+      <line x1="300" y1="230" x2="350" y2="230" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)" opacity=".7"/>
+      <text x="325" y="245" font-size="10" text-anchor="middle" fill="currentColor" opacity=".7">批规模塌缩</text>
+    </svg>
+    <figcaption>权重的搬运量在两个阶段完全相同，而计算量随激活行数成比例下降。decode 阶段每搬运一次权重只做一个 token 的计算，算术强度因此塌缩到批大小的量级。</figcaption>
+  </figure>
+
+  <div class="key">
+    <span class="kt">本章最重要的推论</span>
+    <p><b>decode 阶段的算术强度约等于批大小。</b>因此在 H200 上，当批大小低于 103 时，decode 必然处于带宽受限状态——计算单元大部分时间在等待显存，而非在进行运算。</p>
+    <p>由此可以直接推出一条基本原则：<b>提升推理吞吐量的首要手段是增大批规模，而不是更换算力更强的硬件。</b>第三章中的连续批处理、分页 KV Cache、投机解码等技术，全部是在这一约束下展开的。</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 390" role="img" aria-label="Roofline 图：H200 的性能拐点位于算术强度 103 FLOP per Byte。decode 阶段批大小 1、22、103 依次落在带宽受限的斜坡上，prefill 落在算力受限的平台上">
+      <text x="20" y="22" font-size="11.5" font-weight="600" fill="currentColor">可达算力 (TFLOPS)</text>
+      <line x1="90" y1="330" x2="600" y2="330" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="90" y1="50" x2="90" y2="330" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="90" y1="236.7" x2="600" y2="236.7" stroke="currentColor" stroke-width=".5" opacity=".18"/>
+      <line x1="90" y1="143.3" x2="600" y2="143.3" stroke="currentColor" stroke-width=".5" opacity=".18"/>
+      <line x1="90" y1="50" x2="600" y2="50" stroke="currentColor" stroke-width=".5" opacity=".18"/>
+      <text x="82" y="334" font-size="10.5" text-anchor="end" fill="currentColor" opacity=".7">1</text>
+      <text x="82" y="240" font-size="10.5" text-anchor="end" fill="currentColor" opacity=".7">10</text>
+      <text x="82" y="147" font-size="10.5" text-anchor="end" fill="currentColor" opacity=".7">100</text>
+      <text x="82" y="54" font-size="10.5" text-anchor="end" fill="currentColor" opacity=".7">1000</text>
+      <text x="90" y="350" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".7">1</text>
+      <text x="217.5" y="350" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".7">10</text>
+      <text x="345" y="350" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".7">100</text>
+      <text x="472.5" y="350" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".7">1000</text>
+      <text x="600" y="350" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".7">10000</text>
+      <text x="345" y="374" font-size="11.5" text-anchor="middle" fill="currentColor" font-weight="600">算术强度 (FLOP/Byte)</text>
+
+      <rect x="90" y="50" width="256.6" height="280" fill="var(--amber)" opacity=".05"/>
+      <rect x="346.6" y="50" width="253.4" height="280" fill="var(--blue)" opacity=".05"/>
+      <text x="215" y="72" font-size="12" font-weight="600" text-anchor="middle" fill="var(--amber)">带宽受限</text>
+      <text x="215" y="88" font-size="10" text-anchor="middle" fill="currentColor" opacity=".7">加算力无用，需增大批规模</text>
+      <text x="475" y="120" font-size="12" font-weight="600" text-anchor="middle" fill="var(--blue)">算力受限</text>
+      <text x="475" y="136" font-size="10" text-anchor="middle" fill="currentColor" opacity=".7">已能用满算力</text>
+
+      <line x1="346.6" y1="78.6" x2="346.6" y2="330" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" opacity=".55"/>
+      <line x1="90" y1="78.6" x2="600" y2="78.6" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" opacity=".45"/>
+      <text x="596" y="72" font-size="10.5" text-anchor="end" fill="currentColor" opacity=".8">峰值 495 TFLOPS</text>
+
+      <polyline points="90,266 346.6,78.6 600,78.6" fill="none" stroke="currentColor" stroke-width="2.5"/>
+
+      <circle cx="90" cy="266" r="4.5" fill="var(--amber)" stroke="var(--surface)" stroke-width="1.5"/>
+      <text x="99" y="262" font-size="10.5" fill="currentColor">batch=1 &#183; 4.8 TFLOPS</text>
+      <circle cx="261.2" cy="141.1" r="4.5" fill="var(--amber)" stroke="var(--surface)" stroke-width="1.5"/>
+      <text x="270" y="137" font-size="10.5" fill="currentColor">batch=22（本章 8K 场景）</text>
+      <circle cx="346.6" cy="78.6" r="5.5" fill="var(--red)" stroke="var(--surface)" stroke-width="1.5"/>
+      <text x="352" y="176" font-size="11.5" font-weight="600" fill="var(--red)">拐点 103</text>
+      <text x="352" y="192" font-size="10" fill="currentColor" opacity=".75">495 TFLOPS ÷ 4.8 TB/s</text>
+      <line x1="352" y1="160" x2="349" y2="88" stroke="var(--red)" stroke-width="1" opacity=".5"/>
+      <circle cx="489.7" cy="78.6" r="4.5" fill="var(--blue)" stroke="var(--surface)" stroke-width="1.5"/>
+      <text x="484" y="100" font-size="10.5" text-anchor="middle" fill="currentColor">prefill ≈ 1365</text>
+    </svg>
+    <figcaption>斜坡段的可达算力由显存带宽决定，平台段由峰值算力决定，二者交点即拐点。decode 的算术强度约等于批大小，因此常见部署都落在左侧斜坡上——这是推理系统必须攒批的根本原因。</figcaption>
+  </figure>
+
+  <p>这条推论同时解释了运维中的一个常见困惑：<code>nvidia-smi</code> 显示 GPU 利用率接近百分之百，但服务吞吐并不理想。该指标仅表示存在内核正在执行，并不区分计算单元是在运算还是在等待显存。判断真实状态需要依据算术强度，或参考 Nsight 报告中的显存吞吐指标。</p>
+
+  <h2 id="s3"><span class="sn">1.3</span>反向传播的三倍关系</h2>
+
+  <p>训练一步包含前向与反向两个过程，其计算量存在固定的比例关系：</p>
+
+  <ul>
+    <li><b>前向传播</b>：每个参数参与一次乘加运算，因此每个 token 约需 <code>2N</code> 次浮点运算，N 为参数量。</li>
+    <li><b>反向传播</b>：需要分别计算两个梯度——对输入的梯度（用于向前一层传递）与对权重的梯度（用于参数更新），每项各需 <code>2N</code>，合计 <code>4N</code>。</li>
+  </ul>
+
+  <p>二者相加，每个 token 约需 <code>6N</code> 次浮点运算。乘以训练数据总量 D，得到训练算力的经验公式：</p>
+
+  <div class="fml"><pre>C ≈ 6 · N · D                  <span class="cm">N 为参数量，D 为训练 token 数</span></pre></div>
+
+  <p>推理侧只有前向过程，因此生成一个 token 约需 <code>2N</code> 次浮点运算。</p>
+
+  <h3>用法示例</h3>
+
+  <p>训练一个 7B 模型，使用 2T token：</p>
+
+  <div class="fml"><pre>总算力  = 6 × 7×10⁹ × 2×10¹²  = 8.4 × 10²² FLOPs
+单卡有效算力 = 495 TFLOPS × 40% MFU = 1.98 × 10¹⁴ FLOPS
+所需卡天 = 8.4×10²² ÷ 1.98×10¹⁴ ÷ 86400 ≈ 4910 卡天
+
+1024 卡 → 约 4.8 天</pre></div>
+
+  <p>其中 MFU（Model FLOPs Utilization，模型算力利用率）指实际达成的算力占峰值算力的比例。BF16 预训练达到百分之四十至五十属于正常水平，该指标将在第四章详细讨论。</p>
+
+  <h2 id="s4"><span class="sn">1.4</span>交叉熵与困惑度</h2>
+
+  <p>语言模型的训练目标为交叉熵损失，困惑度与其的关系为：</p>
+
+  <div class="fml"><pre>ppl = exp(loss)</pre></div>
+
+  <p>需要建立两个数值锚点，用于快速判断训练状态：</p>
+
+  <p><b>其一，随机猜测对应的损失值等于词表大小的自然对数。</b>Llama 3 的词表规模为 128256，因此 <code>ln(128256) ≈ 11.76</code>。若模型损失长期停留在该数值附近，说明尚未学到任何有效信息，通常意味着学习率、初始化或数据管线存在问题。</p>
+
+  <p><b>其二，损失下降 0.1 所对应的实际改善幅度。</b>以 <code>exp(2.0) = 7.39</code> 与 <code>exp(1.9) = 6.69</code> 为例，困惑度降低了百分之九点五。这解释了为何在预训练后期，损失值 0.01 的改善也值得投入资源争取。</p>
+
+  <h2 id="s5"><span class="sn">1.5</span>数值格式</h2>
+
+  <p>本节只需掌握一条原则：<b>指数位决定动态范围，尾数位决定精度。</b></p>
+
+  <div class="tw"><table>
+    <thead><tr><th>格式</th><th class="num">符号 / 指数 / 尾数</th><th class="num">字节</th><th>关键特征</th></tr></thead>
+    <tbody>
+      <tr><td>FP32</td><td class="num">1 / 8 / 23</td><td class="num">4</td><td>基准格式</td></tr>
+      <tr><td>TF32</td><td class="num">1 / 8 / 10</td><td class="num">4</td><td>张量核心的内部格式，存储仍占 4 字节</td></tr>
+      <tr class="hl"><td><b>BF16</b></td><td class="num">1 / <b>8</b> / 7</td><td class="num">2</td><td><b>指数位与 FP32 相同，动态范围一致</b></td></tr>
+      <tr><td>FP16</td><td class="num">1 / 5 / 10</td><td class="num">2</td><td>精度较高但范围较窄，最大值 65504</td></tr>
+      <tr><td>FP8 E4M3</td><td class="num">1 / 4 / 3</td><td class="num">1</td><td>用于前向的权重与激活</td></tr>
+      <tr><td>FP8 E5M2</td><td class="num">1 / 5 / 2</td><td class="num">1</td><td>用于梯度，需要更大的动态范围</td></tr>
+      <tr><td>INT8 / INT4</td><td class="num">整数 + 缩放因子</td><td class="num">1 / 0.5</td><td>量化格式，需要校准</td></tr>
+    </tbody>
+  </table></div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 250" role="img" aria-label="位宽对比图：BF16 的指数位为 8 位，与 FP32 完全相同，因此动态范围一致；FP16 的指数位只有 5 位，范围窄得多，训练时梯度容易下溢">
+      <rect x="110" y="24" width="15" height="13" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
+      <text x="131" y="35" font-size="10.5" fill="currentColor">符号</text>
+      <rect x="172" y="24" width="15" height="13" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1"/>
+      <text x="193" y="35" font-size="10.5" fill="currentColor">指数位 → 动态范围</text>
+      <rect x="320" y="24" width="15" height="13" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
+      <text x="341" y="35" font-size="10.5" fill="currentColor">尾数位 → 精度</text>
+
+      <line x1="245" y1="52" x2="245" y2="212" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="4 3" opacity=".85"/>
+      <text x="250" y="228" font-size="10.5" fill="var(--blue)" font-weight="600">FP32 与 BF16 的指数位在此对齐</text>
+
+      <text x="102" y="76" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">FP32</text>
+      <rect x="110" y="60" width="15" height="20" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
+      <rect x="125" y="60" width="120" height="20" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1"/>
+      <text x="185" y="74" font-size="10" text-anchor="middle" fill="currentColor">8</text>
+      <rect x="245" y="60" width="345" height="20" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
+      <text x="417" y="74" font-size="10" text-anchor="middle" fill="currentColor">23</text>
+      <text x="600" y="74" font-size="10" fill="currentColor" opacity=".65">4 B</text>
+
+      <text x="102" y="111" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">BF16</text>
+      <rect x="110" y="95" width="15" height="20" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
+      <rect x="125" y="95" width="120" height="20" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1"/>
+      <text x="185" y="109" font-size="10" text-anchor="middle" fill="currentColor">8</text>
+      <rect x="245" y="95" width="105" height="20" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
+      <text x="297" y="109" font-size="10" text-anchor="middle" fill="currentColor">7</text>
+      <text x="360" y="109" font-size="10" fill="currentColor" opacity=".65">2 B &#183; 范围同 FP32，无需损失缩放</text>
+
+      <text x="102" y="146" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">FP16</text>
+      <rect x="110" y="130" width="15" height="20" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
+      <rect x="125" y="130" width="75" height="20" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1"/>
+      <text x="162" y="144" font-size="10" text-anchor="middle" fill="currentColor">5</text>
+      <rect x="200" y="130" width="150" height="20" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
+      <text x="275" y="144" font-size="10" text-anchor="middle" fill="currentColor">10</text>
+      <text x="360" y="144" font-size="10" fill="var(--amber)" opacity=".95">2 B &#183; 范围窄，梯度下溢，须损失缩放</text>
+
+      <text x="102" y="181" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">FP8 E4M3</text>
+      <rect x="110" y="165" width="15" height="20" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
+      <rect x="125" y="165" width="60" height="20" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1"/>
+      <text x="155" y="179" font-size="10" text-anchor="middle" fill="currentColor">4</text>
+      <rect x="185" y="165" width="45" height="20" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
+      <text x="207" y="179" font-size="10" text-anchor="middle" fill="currentColor">3</text>
+      <text x="240" y="179" font-size="10" fill="currentColor" opacity=".65">1 B &#183; 前向用</text>
+
+      <text x="102" y="207" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">FP8 E5M2</text>
+      <rect x="110" y="192" width="15" height="18" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
+      <rect x="125" y="192" width="75" height="18" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1"/>
+      <text x="162" y="205" font-size="10" text-anchor="middle" fill="currentColor">5</text>
+      <rect x="200" y="192" width="30" height="18" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
+      <text x="215" y="205" font-size="10" text-anchor="middle" fill="currentColor">2</text>
+      <text x="240" y="205" font-size="10" fill="currentColor" opacity=".65">1 B &#183; 梯度用，让出尾数换范围</text>
+    </svg>
+    <figcaption>每格代表一个二进制位。BF16 是把 FP32 的尾数砍掉一半、指数位原样保留的结果，因此动态范围不变；FP16 则是牺牲范围换精度，这正是它在训练中需要损失缩放的原因。</figcaption>
+  </figure>
+
+  <div class="key">
+    <span class="kt">为何业界从 FP16 转向 BF16</span>
+    <p>FP16 仅有 5 位指数，最小正规数约为 <code>6×10⁻⁵</code>。训练后期的梯度经常小于该量级，会直接下溢为零并导致训练发散。规避手段是损失缩放（loss scaling），即将损失乘以一个较大系数再在更新前缩回，但该机制需要调参且存在失效风险。</p>
+    <p>BF16 的指数位宽度与 FP32 相同，动态范围一致，梯度不会下溢，<b>因而无需损失缩放</b>，直接消除了一整类训练故障。代价是尾数仅有 7 位、精度较低，但实践表明训练过程对动态范围的敏感度远高于对精度的敏感度。</p>
+  </div>
+
+  <h2 id="s6"><span class="sn">1.6</span>三个估算公式</h2>
+
+  <p>本章的全部产出是以下三个公式，应当能够脱离参考资料直接使用：</p>
+
+  <div class="fml"><pre>① 权重显存 = 参数量 × 每参数字节数
+
+② KV Cache = 2 × L × H_kv × d_head × S × B × sizeof(dtype)
+
+③ 训练算力 ≈ 6 · N · D</pre></div>
+
+  <p>公式 ② 中各项的含义：系数 <code>2</code> 对应需要缓存的 K 与 V 两份张量；<code>L</code> 为层数；<code>H_kv</code> 为 KV 头数，GQA 所压缩的正是这一项；<code>d_head</code> 为每个注意力头的维度；<code>S</code> 为序列长度；<code>B</code> 为并发请求数。这些参数均可直接从模型的 <code>config.json</code> 中读取。</p>
+
+  <h2 id="s7"><span class="sn">1.7</span>完整示例：Llama-3-70B 部署于 H200</h2>
+
+  <p>从 <code>config.json</code> 中读取关键参数：层数 80，隐藏维度 8192，注意力头数 64，KV 头数 8，头维度 128，参数量 70.55B。</p>
+
+  <h3>第一步：判断权重是否放得下</h3>
+
+  <div class="fml"><pre>BF16: 70.55×10⁹ × 2 = 141.1 GB   <span class="cm">> 141 GB，单卡放不下</span>
+FP8:  70.55×10⁹ × 1 =  70.6 GB   <span class="cm">可以放下</span></pre></div>
+
+  <p>这是一个具有代表性的结果：70B 模型在 BF16 精度下恰好超出单卡容量，必须采用张量并行（TP=2）或改用 FP8 量化。此类判断在选型阶段的价值很高，且只需一次乘法。</p>
+
+  <h3>第二步：计算每 token 的 KV Cache 占用</h3>
+
+  <div class="fml"><pre>2 × 80 × 8 × 128 × 2 字节 = 327,680 B = 320 KiB / token</pre></div>
+
+  <h3>第三步：估算可支持的并发规模</h3>
+
+  <p>采用 FP8 权重、BF16 KV Cache，单卡部署：</p>
+
+  <div class="fml"><pre>可用于 KV 的空间 ≈ 141 − 70.6 − 10 = 60.4 GB
+                              <span class="cm">扣除的 10 GB 为激活值、框架开销与 CUDA 上下文</span>
+
+可容纳 token 总数 = 60.4×10⁹ ÷ 327,680 ≈ 184,000 tokens
+
+  8K 上下文  →  184,000 ÷ 8192  ≈ 22 路并发
+  2K 上下文  →  184,000 ÷ 2048  ≈ 90 路并发
+ 32K 上下文  →  184,000 ÷ 32768 ≈  5 路并发</pre></div>
+
+  <h3>第四步：回到算术强度</h3>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 290" role="img" aria-label="显存预算图：BF16 权重 141.1 GB 恰好超出 H200 的 141 GB 容量；改用 FP8 权重后腾出 60.4 GB 给 KV Cache，在 8K 上下文下支持 22 路并发，KV 再量化为 FP8 可提升至 45 路">
+      <line x1="110" y1="30" x2="110" y2="250" stroke="currentColor" stroke-width=".8" opacity=".3"/>
+      <line x1="590" y1="30" x2="590" y2="250" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="590" y="24" font-size="11" text-anchor="end" fill="var(--red)" font-weight="600">H200 容量 141 GB</text>
+
+      <text x="102" y="62" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">BF16 权重</text>
+      <rect x="110" y="46" width="480.3" height="26" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1.2"/>
+      <text x="350" y="63" font-size="11" text-anchor="middle" fill="currentColor">70.55B 参数 × 2 字节 = 141.1 GB</text>
+      <text x="110" y="90" font-size="10.5" fill="var(--red)">超出容量，单卡放不下 → 必须 TP=2 或改用 FP8</text>
+
+      <text x="102" y="140" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">FP8 权重</text>
+      <rect x="110" y="124" width="240.3" height="26" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.2"/>
+      <text x="230" y="141" font-size="11" text-anchor="middle" fill="currentColor">权重 70.6 GB</text>
+      <rect x="350.3" y="124" width="34" height="26" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.2" opacity=".9"/>
+      <text x="367" y="167" font-size="9.5" text-anchor="middle" fill="currentColor" opacity=".7">预留 10</text>
+      <rect x="384.3" y="124" width="205.7" height="26" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.2"/>
+      <text x="487" y="141" font-size="11" text-anchor="middle" fill="currentColor" font-weight="600">KV Cache 60.4 GB</text>
+
+      <path d="M384.3 156 L384.3 162 L590 162 L590 156" fill="none" stroke="var(--amber)" stroke-width="1.2"/>
+      <text x="487" y="178" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".8">并发上限由这一段决定</text>
+
+      <line x1="110" y1="196" x2="590" y2="196" stroke="currentColor" stroke-width=".5" opacity=".2"/>
+      <text x="102" y="222" font-size="11.5" text-anchor="end" fill="currentColor" font-weight="600">8K 并发</text>
+      <rect x="110" y="208" width="215" height="24" fill="var(--surface-2)" stroke="currentColor" stroke-width="1" opacity=".9"/>
+      <text x="217" y="224" font-size="10.5" text-anchor="middle" fill="currentColor">BF16 KV &#183; 320 KiB/token</text>
+      <text x="333" y="224" font-size="13" fill="currentColor" font-weight="600">22 路</text>
+
+      <rect x="390" y="208" width="140" height="24" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1"/>
+      <text x="460" y="224" font-size="10.5" text-anchor="middle" fill="currentColor">FP8 KV &#183; 160 KiB</text>
+      <text x="538" y="224" font-size="13" fill="var(--amber)" font-weight="600">45 路</text>
+
+      <text x="110" y="256" font-size="10.5" fill="currentColor" opacity=".75">60.4 GB ÷ 320 KiB = 184,000 tokens ÷ 8192 = 22 路&#160;&#160;·&#160;&#160;KV 减半则并发翻倍</text>
+      <text x="110" y="276" font-size="10.5" fill="var(--blue)">22 路 → 算术强度 ≈ 22，仍在拐点 103 左侧，算力用不到四分之一</text>
+    </svg>
+    <figcaption>权重决定模型能否装下，剩余显存决定能跑多少并发。由于算术强度约等于并发数，这张图右下角的数字直接决定了这台机器落在 Roofline 的哪个位置。</figcaption>
+  </figure>
+
+  <p>8K 上下文场景下仅有约 22 路并发，对应的算术强度约为 22，远低于 H200 的性能拐点 103。这意味着该部署在 decode 阶段处于明显的带宽受限状态，算力利用率不足四分之一。</p>
+
+  <p>若要提升利用率，唯一途径是增大批规模，而批规模又受限于 KV Cache 所能占用的显存。</p>
+
+  <div class="key">
+    <span class="kt">本章与第三章的衔接</span>
+    <p><b>KV Cache 是推理吞吐的核心约束。</b>这一结论解释了第三章中大半技术的存在动机：分页管理消除碎片以提高显存利用率、前缀缓存复用已有计算、KV 量化直接减半占用，其共同目标都是在有限显存内容纳更多并发请求，从而将算术强度推向性能拐点。</p>
+    <p>作为验证：将 KV Cache 改为 FP8 后，每 token 占用降至 160 KiB，8K 上下文下的并发从 22 路提升至 <b>45 路</b>，算术强度随之翻倍。这正是 KV 量化被视为独立于权重量化的一档收益的原因。</p>
+  </div>
+
+  <h2 id="s8"><span class="sn">1.8</span>可复用的估算工具</h2>
+
+  <p>将上述流程固化为一个函数，便于在选型讨论中直接调用：</p>
+
+  <pre class="code"><span class="kw">def</span> plan(params_b, layers, kv_heads, head_dim,
+         gpu_gb=141, w_bytes=1, kv_bytes=2, overhead_gb=10):
+    <span class="cm">"""params_b: 参数量（十亿）; w_bytes: 权重每参数字节; kv_bytes: KV 每元素字节"""</span>
+    w  = params_b * 1e9 * w_bytes / 1e9
+    kv = 2 * layers * kv_heads * head_dim * kv_bytes   <span class="cm"># 每 token 字节数</span>
+    free = gpu_gb - w - overhead_gb
+    toks = free * 1e9 / kv
+    <span class="kw">print</span>(f"权重 {w:.1f} GB | KV {kv/1024:.0f} KiB/token | 可容纳 {toks:,.0f} tokens")
+    <span class="kw">for</span> s <span class="kw">in</span> (2048, 8192, 32768):
+        <span class="kw">print</span>(f"  {s//1024:>2}K 上下文 → {toks/s:.0f} 路并发")
+
+plan(70.55, 80, 8, 128)                <span class="cm"># Llama-3-70B, FP8 权重</span>
+plan(70.55, 80, 8, 128, kv_bytes=1)    <span class="cm"># 同上，KV 改为 FP8</span></pre>
+
+  <p>需要说明的是，该函数给出的是理论上限。实际可用并发还会受到调度器预留、显存碎片、CUDA Graph 捕获所需空间等因素影响，通常比估算值低百分之十至二十。其用途在于快速判断量级与方案可行性，精确数值仍需以实测为准——这正是第三章阶段 2 要求先建立性能基线的原因。</p>
+
+  <h2 id="s9"><span class="sn">1.9</span>本章练习</h2>
+
+  <p>本章的验收标准是：能否迅速估算出单卡可支持的并发规模。以下三题用于检验，建议先独立完成再查看解答。</p>
+
+  <div class="ex">
+    <p class="exn">练习 1 · 并发估算</p>
+    <p>Qwen3-32B 的配置为：层数 64，KV 头数 8，头维度 128，参数量 32.8B。采用 BF16 权重与 BF16 KV Cache，部署于单张 H200，上下文长度 32K。可支持多少路并发？</p>
+    <details>
+      <summary>查看解答</summary>
+      <div class="fml"><pre>权重     = 32.8×10⁹ × 2 = 65.6 GB
+KV/token = 2 × 64 × 8 × 128 × 2 = 262,144 B = 256 KiB
+可用空间 = 141 − 65.6 − 10 = 65.4 GB
+token 数 = 65.4×10⁹ ÷ 262,144 ≈ 249,000
+并发     = 249,000 ÷ 32768 ≈ <b>7 路</b></pre></div>
+      <p>本题的要点在于：32B 模型看似不大，但在 32K 长上下文下并发仅有个位数。<b>长上下文场景的成本主要由 KV Cache 而非权重决定</b>，这一点在容量规划中经常被低估。</p>
+    </details>
+  </div>
+
+  <div class="ex">
+    <p class="exn">练习 2 · GQA 的价值</p>
+    <p>沿用 1.7 节的 70B 模型与配置，若它采用 MHA（KV 头数为 64）而非 GQA（KV 头数为 8），8K 上下文下的并发会变成多少？</p>
+    <details>
+      <summary>查看解答</summary>
+      <div class="fml"><pre>KV/token = 2 × 80 × 64 × 128 × 2 = 2,621,440 B = 2560 KiB = 2.5 MiB
+token 数 = 60.4×10⁹ ÷ 2,621,440 ≈ 23,000
+并发     = 23,000 ÷ 8192 ≈ <b>2 路</b>   <span class="cm">（GQA 方案为 22 路）</span></pre></div>
+      <p>KV 头数从 64 压缩到 8，并发能力提升为原来的八倍。<b>GQA 并非精度上的妥协，而是一项将推理成本降低近一个数量级的结构改动</b>——这解释了为何它已成为当前开源模型的标准配置。第二章将说明它在效果上的代价为何可以接受。</p>
+    </details>
+  </div>
+
+  <div class="ex">
+    <p class="exn">练习 3 · 训练周期估算</p>
+    <p>训练一个 32B 模型，使用 10T token，可用资源为 256 张 H200，MFU 按百分之四十五计算。需要多长时间？</p>
+    <details>
+      <summary>查看解答</summary>
+      <div class="fml"><pre>总算力   = 6 × 32×10⁹ × 10×10¹² = 1.92 × 10²⁴ FLOPs
+单卡有效 = 495×10¹² × 45% = 2.23 × 10¹⁴ FLOPS
+集群算力 = 256 × 2.23×10¹⁴ = 5.70 × 10¹⁶ FLOPS
+耗时     = 1.92×10²⁴ ÷ 5.70×10¹⁶ ≈ 3.37×10⁷ 秒 ≈ <b>390 天</b></pre></div>
+      <p>本题的意义在于结论本身：<b>256 张卡不足以支撑这一训练任务</b>。折算为约 10 万卡天，若要在两个月内完成，需要约 1600 张卡。这类估算应当在立项阶段完成，而非在训练启动数周后才发现资源不足。</p>
+      <p>此外需注意，上述计算尚未计入故障恢复、检查点写入与数据加载等开销。实际项目通常还需在此基础上追加百分之十至二十的时间余量。</p>
+    </details>
+  </div>
+
+  <h2 id="s10"><span class="sn">1.10</span>小结</h2>
+
+  <p>本章的内容可以压缩为四条：</p>
+
+  <ol>
+    <li><b>算术强度</b>是全部性能分析的共同坐标，等于计算量除以显存访问量。</li>
+    <li>硬件的<b>性能拐点</b>等于峰值算力除以显存带宽，H200 在 BF16 下约为 103 FLOP/Byte。低于该值即为带宽受限。</li>
+    <li><b>decode 阶段的算术强度约等于批大小</b>，因此推理吞吐的首要杠杆是增大批规模，而批规模受制于 KV Cache 显存。</li>
+    <li>三个估算公式：权重显存、KV Cache、训练算力 <code>6ND</code>。</li>
+  </ol>
+
+  <p>其中第三条是本章与第三章之间的桥梁。理解了「批规模受 KV Cache 约束，而算术强度又约等于批规模」这一链条，第三章中分页管理、前缀缓存、KV 量化、连续批处理等技术的动机便都不需要额外解释了。</p>
+
+  <p>下一章进入模型结构原理，说明 Transformer 各组件分别消耗多少算力与显存。本章建立的成本模型将在其中反复使用。</p>
+
+  <div class="cfoot">
+    <p class="fl">本章为个人学习笔记的一部分，内容会随理解的深入持续修订。发现错误之处欢迎通过 issue 指出。</p>
+    <a class="next" href="./#模型结构">
+      <span class="l">下一章</span>
+      <span class="t">第二章 · 模型结构原理</span>
+    </a>
+  </div>
+
+  </article>
+</div>

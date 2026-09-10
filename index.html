@@ -129,6 +129,17 @@ h1{
 .node-t{font-weight:600;font-size:16px;margin:2px 0 4px;letter-spacing:-.01em}
 .node-d{font-size:13px;color:var(--muted);line-height:1.55}
 
+/* ---------- published-chapter affordances ---------- */
+.ready{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;
+  background:var(--amber-soft);color:var(--amber);padding:2px 6px;border-radius:3px;
+  font-weight:600;margin-left:8px}
+.readbtn{display:flex;flex-direction:column;gap:1px;margin-top:14px;text-decoration:none;
+  border:1px solid var(--blue);border-radius:5px;padding:10px 14px;background:var(--blue-soft)}
+.readbtn:hover{background:var(--surface)}
+.readbtn .l{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
+.readbtn .t{font-weight:600;color:var(--blue);font-size:14.5px}
+
 /* ---------- chapters ---------- */
 .module{
   border-top:1px solid var(--line);padding-block:38px 4px;
@@ -381,7 +392,7 @@ td.mod{white-space:nowrap;font-family:"IBM Plex Mono",monospace;font-size:12px;f
 <script>
 const M = [
   {
-    id:"M0", ch:"第一章", key:"core", anchor:"计算基础",
+    id:"M0", ch:"第一章", key:"core", anchor:"计算基础", read:"ch01-compute-basics.html",
     title:"计算基础",
     lede:"本章不涉及数学推导，目标是建立三项能力：估算显存占用、估算算力需求、理解数值格式的取舍。",
     why:"后续各章在讨论容量规划与性能瓶颈时会反复使用本章的三个公式。缺少这一基础，相关讨论只能停留在定性层面。",
@@ -669,7 +680,8 @@ M.forEach((m,i)=>{
 const tiers=document.getElementById("tiers");
 function nodeCard(m){
   const a=el("a","node"); a.href="#"+m.anchor; a.dataset.k=m.key;
-  a.innerHTML='<div class="node-id">'+m.id+' · '+m.ch+'</div><div class="node-t">'+m.title+'</div><div class="node-d">'+m.node+'</div>';
+  a.innerHTML='<div class="node-id">'+m.id+' · '+m.ch+(m.read?'<span class="ready">正文已发布</span>':'')+'</div>'
+    +'<div class="node-t">'+m.title+'</div><div class="node-d">'+m.node+'</div>';
   return a;
 }
 function tier(label,mods,cls){
@@ -717,7 +729,8 @@ M.forEach(m=>{
   const sec=el("section","module"); sec.id=m.anchor;
   const rail=el("div","rail");
   rail.innerHTML='<p class="rail-id">'+m.ch+' · '+m.id+'</p><h3>'+m.title+'</h3><p>'+m.lede+'</p>'
-    +'<div class="why"><b>学习价值</b>'+m.why+'</div>';
+    +'<div class="why"><b>学习价值</b>'+m.why+'</div>'
+    +(m.read?'<a class="readbtn" href="'+m.read+'"><span class="l">本章正文</span><span class="t">阅读 →</span></a>':'');
   const col=el("div","modcol");
   if(m.ladder){
     const b1=el("div","colblock");
