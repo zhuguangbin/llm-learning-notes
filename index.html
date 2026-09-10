@@ -1,329 +1,246 @@
 <title>LLM 系统工程地图</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&display=swap">
 
 <style>
 :root{
-  --ground:#F4F6F8;
-  --surface:#FFFFFF;
-  --surface-2:#EBEFF4;
-  --ink:#10151C;
-  --ink-2:#3A4452;
-  --muted:#697687;
-  --line:#D7DEE7;
-  --line-soft:#E4EAF1;
-  --blue:#1B4FD8;
-  --blue-soft:#E7EDFC;
-  --amber:#9A6400;
-  --amber-soft:#FBF0DA;
-  --red:#A81F27;
-  --red-soft:#FAE7E7;
+  --ground:#F4F6F8; --surface:#FFFFFF; --surface-2:#EBEFF4;
+  --ink:#10151C; --ink-2:#3A4452; --muted:#697687;
+  --line:#D7DEE7; --line-soft:#E4EAF1;
+  --blue:#1B4FD8; --blue-soft:#E7EDFC;
+  --amber:#9A6400; --amber-soft:#FBF0DA;
+  --red:#A81F27;  --red-soft:#FAE7E7;
   --shadow:0 1px 2px rgba(16,21,28,.05);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --ground:#0D1117;
-    --surface:#151B23;
-    --surface-2:#1D242E;
-    --ink:#E8EDF4;
-    --ink-2:#B6C0CE;
-    --muted:#8492A5;
-    --line:#2B3542;
-    --line-soft:#222A35;
-    --blue:#7FA6FF;
-    --blue-soft:#18233C;
-    --amber:#E3A94A;
-    --amber-soft:#2A2213;
-    --red:#F08C90;
-    --red-soft:#2C1A1C;
+    --ground:#0D1117; --surface:#151B23; --surface-2:#1D242E;
+    --ink:#E8EDF4; --ink-2:#B6C0CE; --muted:#8492A5;
+    --line:#2B3542; --line-soft:#222A35;
+    --blue:#7FA6FF; --blue-soft:#18233C;
+    --amber:#E3A94A; --amber-soft:#2A2213;
+    --red:#F08C90;  --red-soft:#2C1A1C;
     --shadow:0 1px 2px rgba(0,0,0,.4);
   }
 }
 :root[data-theme="dark"]{
-  --ground:#0D1117;
-  --surface:#151B23;
-  --surface-2:#1D242E;
-  --ink:#E8EDF4;
-  --ink-2:#B6C0CE;
-  --muted:#8492A5;
-  --line:#2B3542;
-  --line-soft:#222A35;
-  --blue:#7FA6FF;
-  --blue-soft:#18233C;
-  --amber:#E3A94A;
-  --amber-soft:#2A2213;
-  --red:#F08C90;
-  --red-soft:#2C1A1C;
+  --ground:#0D1117; --surface:#151B23; --surface-2:#1D242E;
+  --ink:#E8EDF4; --ink-2:#B6C0CE; --muted:#8492A5;
+  --line:#2B3542; --line-soft:#222A35;
+  --blue:#7FA6FF; --blue-soft:#18233C;
+  --amber:#E3A94A; --amber-soft:#2A2213;
+  --red:#F08C90;  --red-soft:#2C1A1C;
   --shadow:0 1px 2px rgba(0,0,0,.4);
 }
 
 *{box-sizing:border-box}
 body{
-  margin:0;
-  background:var(--ground);
-  color:var(--ink);
-  font-family:"IBM Plex Sans","Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:15px;
-  line-height:1.62;
-  -webkit-font-smoothing:antialiased;
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans","Noto Sans SC",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:0}
-code,.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
 a{color:var(--blue)}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:3px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.serif{font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif}
 
 /* ---------- masthead ---------- */
 .masthead{border-bottom:1px solid var(--line);background:var(--surface)}
-.mast-inner{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;padding-block:34px 26px}
+.mast-inner{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;padding-block:38px 28px}
 .eyebrow{
   font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
   letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px
 }
 h1{
-  font-family:"IBM Plex Serif","Noto Sans SC",Georgia,serif;
-  font-size:clamp(30px,4.6vw,44px);font-weight:600;line-height:1.14;margin:0;
-  letter-spacing:-.015em;text-wrap:balance;
+  font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif;
+  font-size:clamp(30px,4.6vw,44px);font-weight:600;line-height:1.16;margin:0;
+  letter-spacing:-.015em;text-wrap:balance
 }
-.lede{margin:12px 0 0;max-width:56ch;color:var(--ink-2);font-size:15.5px}
-.stamp{
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);
-  line-height:1.9;text-align:right;flex-shrink:0
-}
+.lede{margin:14px 0 0;max-width:58ch;color:var(--ink-2);font-size:15.5px}
+.stamp{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);line-height:1.95;text-align:right;flex-shrink:0}
 .stamp b{color:var(--ink-2);font-weight:500}
 
-/* ---------- toc nav ---------- */
-.toc{
-  position:sticky;top:0;z-index:20;background:var(--surface);
-  border-bottom:1px solid var(--line);
-}
+/* ---------- toc ---------- */
+.toc{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
 .toc-inner{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
 .toc a{
-  flex:0 0 auto;display:flex;align-items:baseline;gap:7px;
-  padding:11px 13px;text-decoration:none;color:var(--ink-2);
-  font-size:13.5px;border-bottom:2px solid transparent;white-space:nowrap;
+  flex:0 0 auto;display:flex;align-items:baseline;gap:7px;padding:11px 13px;
+  text-decoration:none;color:var(--ink-2);font-size:13.5px;white-space:nowrap;
+  border-bottom:2px solid transparent
 }
 .toc a:hover{color:var(--ink);background:var(--surface-2)}
 .toc a .n{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--blue);font-weight:600}
 
-/* ---------- overview map ---------- */
-.map{padding-block:40px 8px}
-.sec-label{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 16px;font-weight:500
+/* ---------- part divider ---------- */
+.part{
+  border-top:2px solid var(--ink);margin-top:52px;padding-top:18px;
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap
 }
+.part .pn{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap
+}
+.part h2{
+  font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif;
+  font-size:27px;font-weight:600;margin:0;letter-spacing:-.012em
+}
+.part .pd{
+  flex-basis:100%;margin:6px 0 0;font-size:13.5px;color:var(--muted);max-width:68ch;line-height:1.65
+}
+
+/* ---------- generic prose section ---------- */
+.sub-sec{padding-block:30px 0}
+.sub-sec > h3{
+  font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif;
+  font-size:19px;font-weight:600;margin:0 0 4px;letter-spacing:-.008em
+}
+.sub-sec > h3 .num{
+  font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--blue);
+  font-weight:600;margin-right:9px
+}
+.sub-sec > .note{margin:0 0 16px;font-size:13.5px;color:var(--muted);max-width:70ch}
+.prose p{margin:0 0 12px;max-width:70ch;color:var(--ink-2);font-size:14.5px}
+.prose p:last-child{margin-bottom:0}
+.prose b{color:var(--ink);font-weight:600}
+.prose code{font-size:12.5px;background:var(--surface-2);padding:1px 4px;border-radius:3px;border:1px solid var(--line-soft)}
+
+/* ---------- dependency map ---------- */
 .tiers{display:flex;flex-direction:column;gap:0}
 .tier{display:flex;flex-direction:column;gap:10px}
-.tier-head{
-  display:flex;align-items:center;gap:10px;
-  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.06em
-}
+.tier-head{display:flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.06em}
 .tier-head::after{content:"";flex:1;height:1px;background:var(--line-soft)}
 .tier-row{display:grid;gap:10px}
 .tier-row.two{grid-template-columns:1fr 1fr}
 .tier-row.one{grid-template-columns:1fr}
-.connector{height:20px;margin-left:26px;border-left:1px dashed var(--line);flex:0 0 auto}
-
+.connector{height:20px;margin-left:26px;border-left:1px dashed var(--line)}
 .node{
-  display:block;text-decoration:none;color:inherit;
-  background:var(--surface);border:1px solid var(--line);border-radius:5px;
-  padding:14px 16px;box-shadow:var(--shadow);
-  border-left:3px solid var(--line);
+  display:block;text-decoration:none;color:inherit;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--line);border-radius:5px;
+  padding:14px 16px;box-shadow:var(--shadow)
 }
 .node:hover{border-color:var(--blue);border-left-color:var(--blue)}
 .node[data-k="core"]{border-left-color:var(--blue)}
-.node[data-k="infer"]{border-left-color:var(--amber)}
-.node[data-k="train"]{border-left-color:var(--amber)}
+.node[data-k="infer"],.node[data-k="train"]{border-left-color:var(--amber)}
 .node[data-k="cross"]{border-left-color:var(--red)}
 .node-id{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--muted)}
 .node-t{font-weight:600;font-size:16px;margin:2px 0 4px;letter-spacing:-.01em}
-.node-d{font-size:13px;color:var(--muted);line-height:1.5}
+.node-d{font-size:13px;color:var(--muted);line-height:1.55}
 
-/* ---------- modules ---------- */
+/* ---------- chapters ---------- */
 .module{
-  border-top:1px solid var(--line);
-  padding-block:44px 4px;
-  display:grid;grid-template-columns:230px 1fr;gap:44px;align-items:start;
+  border-top:1px solid var(--line);padding-block:38px 4px;
+  display:grid;grid-template-columns:236px 1fr;gap:44px;align-items:start
 }
 .rail{position:sticky;top:56px}
-.rail-id{
-  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
-  letter-spacing:.1em;color:var(--blue);margin:0 0 6px
-}
-.rail h2{
-  font-family:"IBM Plex Serif","Noto Sans SC",Georgia,serif;
-  font-size:25px;font-weight:600;margin:0 0 12px;line-height:1.22;letter-spacing:-.01em
-}
-.rail p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.6}
-.rail .why{
-  margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);
-  font-size:13px;color:var(--ink-2)
-}
-.rail .why b{
-  display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
-  font-weight:500;margin-bottom:5px
-}
+.rail-id{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.1em;color:var(--blue);margin:0 0 6px}
+.rail h3{font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif;font-size:24px;font-weight:600;margin:0 0 12px;line-height:1.25;letter-spacing:-.01em}
+.rail p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.65}
+.rail .why{margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:13px;color:var(--ink-2);line-height:1.65}
+.rail .why b{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:5px}
+.modcol{min-width:0}
+
+.colhead{display:flex;align-items:baseline;gap:10px;margin:0 0 12px}
+.colhead::before{content:"";width:3px;align-self:stretch;background:var(--line);border-radius:2px;flex:0 0 auto}
+.colhead.now::before{background:var(--amber)}
+.colhead .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
+.colhead .d{font-size:12.5px;color:var(--muted);line-height:1.55}
+.colblock + .colblock{margin-top:32px}
 
 .topics{display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line);border-radius:5px;overflow:hidden}
-.topic{background:var(--surface);padding:13px 16px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
-.tag{
-  font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:600;
-  letter-spacing:.06em;padding:2px 6px;border-radius:3px;white-space:nowrap;
-  align-self:start;margin-top:3px;
-}
+.topic{background:var(--surface);padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:600;letter-spacing:.06em;padding:2px 6px;border-radius:3px;white-space:nowrap;align-self:start;margin-top:4px}
 .tag.c{background:var(--blue-soft);color:var(--blue)}
 .tag.h{background:var(--amber-soft);color:var(--amber)}
 .tag.t{background:var(--red-soft);color:var(--red)}
-.topic h3{margin:0 0 3px;font-size:14.5px;font-weight:600;letter-spacing:-.005em}
-.topic p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.58}
-.topic code{
-  font-size:12.5px;background:var(--surface-2);padding:1px 4px;border-radius:3px;
-  color:var(--ink);border:1px solid var(--line-soft)
-}
+.topic h4{margin:0 0 3px;font-size:14.5px;font-weight:600;letter-spacing:-.005em}
+.topic p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.topic code{font-size:12.5px;background:var(--surface-2);padding:1px 4px;border-radius:3px;color:var(--ink);border:1px solid var(--line-soft)}
 
-/* ---------- in-module column heads ---------- */
-.colhead{
-  display:flex;align-items:baseline;gap:10px;margin:0 0 10px
-}
-.colhead .k{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap
-}
-.colhead .d{font-size:12.5px;color:var(--muted);line-height:1.45}
-.colhead::before{
-  content:"";width:3px;align-self:stretch;background:var(--line);border-radius:2px;flex:0 0 auto
-}
-.colhead.now::before{background:var(--amber)}
-.colblock + .colblock{margin-top:30px}
-.modcol{min-width:0}
-
-/* ---------- M2 ladder ---------- */
+/* ---------- staged path ---------- */
 .ladder{display:flex;flex-direction:column;gap:10px}
-.stage{
-  display:grid;grid-template-columns:76px 1fr;gap:20px;
-  background:var(--surface);border:1px solid var(--line);border-radius:5px;
-  padding:16px 18px;box-shadow:var(--shadow);position:relative;
-}
+.stage{display:grid;grid-template-columns:84px 1fr;gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:16px 18px;box-shadow:var(--shadow)}
 .stage.now{border-color:var(--amber);background:linear-gradient(90deg,var(--amber-soft) 0 3px,var(--surface) 3px)}
 .st-rail{display:flex;flex-direction:column;gap:3px;padding-top:2px}
-.st-n{
-  font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:600;
-  color:var(--blue);line-height:1;letter-spacing:-.02em
-}
+.st-n{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--blue);letter-spacing:.08em}
 .stage.now .st-n{color:var(--amber)}
 .st-dur{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted)}
-.st-body h3{margin:0 0 6px;font-size:16px;font-weight:600;letter-spacing:-.01em}
-.st-body p{margin:0;font-size:13.5px;line-height:1.6;color:var(--ink-2);max-width:70ch}
-.st-body code{
-  font-size:12.5px;background:var(--surface-2);padding:1px 4px;border-radius:3px;
-  color:var(--ink);border:1px solid var(--line-soft)
-}
-.gate{
-  margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);
-  font-size:13px;color:var(--ink-2);display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:baseline
-}
-.gate b{
-  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap;
-  border:1px solid var(--line);border-radius:3px;padding:2px 6px
-}
-.weekmark{
-  display:inline-block;vertical-align:1px;font-family:"IBM Plex Mono",monospace;font-size:10px;
-  letter-spacing:.1em;background:var(--amber-soft);color:var(--amber);
-  padding:2px 7px;border-radius:3px;font-weight:600;margin-left:9px
-}
-.weekcut{
-  display:flex;align-items:center;gap:12px;margin:4px 0;
-  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--amber);letter-spacing:.06em
-}
+.st-body h4{margin:0 0 7px;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.st-body p{margin:0;font-size:13.5px;line-height:1.75;color:var(--ink-2);max-width:70ch}
+.st-body code{font-size:12.5px;background:var(--surface-2);padding:1px 4px;border-radius:3px;color:var(--ink);border:1px solid var(--line-soft)}
+.gate{margin-top:12px;padding-top:11px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink-2);display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;line-height:1.65}
+.gate b{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap;border:1px solid var(--line);border-radius:3px;padding:2px 6px}
+.weekcut{display:flex;align-items:center;gap:12px;margin:4px 0;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--amber);letter-spacing:.04em}
 .weekcut::before,.weekcut::after{content:"";flex:1;height:1px;background:var(--amber);opacity:.4}
-@media (max-width:600px){
-  .stage{grid-template-columns:1fr;gap:8px}
-  .st-rail{flex-direction:row;align-items:baseline;gap:10px}
-}
+.afterladder{margin:14px 0 0;font-size:13.5px;color:var(--muted);max-width:70ch;line-height:1.7}
 
 /* ---------- legend ---------- */
-.legend{display:flex;flex-wrap:wrap;gap:16px;padding-block:16px 0;font-size:12.5px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:18px;padding-block:18px 0;font-size:12.5px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:7px}
 
 /* ---------- tables ---------- */
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
-th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
-thead th{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);font-weight:500;
-  background:var(--surface-2);border-bottom:1px solid var(--line)
-}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.65}
+thead th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--surface-2);border-bottom:1px solid var(--line)}
 tbody tr:last-child td{border-bottom:none}
 td.wk{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--blue);white-space:nowrap}
 td.out{color:var(--muted);font-size:13px}
+td.bm b{font-weight:600}
+td.bm span{display:block;font-size:12px;color:var(--muted);font-family:"IBM Plex Mono",monospace;word-break:break-all;line-height:1.6}
+td.mod{white-space:nowrap;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--blue)}
+.tnote{margin:12px 0 0;font-size:13px;color:var(--muted);max-width:70ch;line-height:1.7}
 
-/* ---------- papers ---------- */
-.papers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.pgroup h4{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 10px;
-  padding-bottom:8px;border-bottom:1px solid var(--line)
-}
-.pgroup ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.pgroup li{font-size:13.5px;line-height:1.45}
-.pgroup .yr{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);margin-right:6px}
-.pgroup .nb{display:block;font-size:12.5px;color:var(--muted)}
-
-/* ---------- footer note ---------- */
-.closing{
-  border-top:1px solid var(--line);margin-top:44px;padding-block:28px 44px;
-  font-size:13.5px;color:var(--muted);max-width:64ch
-}
-.closing strong{color:var(--ink-2);font-weight:600}
-
-section.band{padding-block:44px 0;border-top:1px solid var(--line)}
-section.band > h2{
-  font-family:"IBM Plex Serif","Noto Sans SC",Georgia,serif;
-  font-size:25px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em
-}
-.gapbox{
-  margin-top:22px;border:1px solid var(--line);border-left:3px solid var(--red);
-  border-radius:5px;background:var(--surface);padding:18px 20px
-}
-.gapbox h4{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 12px
-}
-.gapbox p{margin:0 0 10px;font-size:13.5px;line-height:1.6;color:var(--ink-2);max-width:70ch}
+/* ---------- gap analysis ---------- */
+.gapbox{margin-top:22px;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:5px;background:var(--surface);padding:18px 20px}
+.gapbox h4{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 12px}
+.gapbox p{margin:0 0 11px;font-size:13.5px;line-height:1.7;color:var(--ink-2);max-width:70ch}
 .gapbox p:last-child{margin-bottom:0}
 .gapbox b{color:var(--ink);font-weight:600}
 .gapbox b.gap-big{color:var(--red)}
-td.bm b{font-weight:600}
-td.bm span{display:block;font-size:12px;color:var(--muted);font-family:"IBM Plex Mono",monospace;word-break:break-all}
-td.mod{white-space:nowrap;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--blue)}
-.afterladder{margin:14px 0 0;font-size:13.5px;color:var(--muted);max-width:70ch}
-section.band > h2 .weekmark{font-family:"IBM Plex Mono",monospace}
-section.band > .sub{margin:0 0 20px;color:var(--muted);font-size:13.5px;max-width:62ch}
+
+/* ---------- reference groups ---------- */
+.papers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.pgroup h4{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.pgroup ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.pgroup li{font-size:13.5px;line-height:1.5}
+.pgroup .yr{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);margin-right:6px}
+.pgroup .nb{display:block;font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ---------- closing ---------- */
+.closing{border-top:2px solid var(--ink);margin-top:52px;padding-block:24px 48px}
+.closing h2{font-family:"IBM Plex Serif","Noto Serif SC",Georgia,serif;font-size:22px;font-weight:600;margin:0 0 12px}
+.closing p{margin:0 0 12px;font-size:14px;color:var(--ink-2);max-width:70ch;line-height:1.75}
+.closing p:last-child{margin-bottom:0}
+.closing b{color:var(--ink);font-weight:600}
 
 @media (max-width:820px){
-  .module{grid-template-columns:1fr;gap:20px;padding-block:34px 4px}
+  .module{grid-template-columns:1fr;gap:20px;padding-block:30px 4px}
   .rail{position:static}
   .tier-row.two{grid-template-columns:1fr}
   .mast-inner{align-items:flex-start}
   .stamp{text-align:left}
+}
+@media (max-width:600px){
+  .stage{grid-template-columns:1fr;gap:8px}
+  .st-rail{flex-direction:row;align-items:baseline;gap:10px}
 }
 </style>
 
 <header class="masthead">
   <div class="wrap mast-inner">
     <div>
-      <p class="eyebrow">面向基础设施工程师的自学大纲</p>
+      <p class="eyebrow">面向基础设施工程师的学习大纲</p>
       <h1>LLM 系统工程地图</h1>
-      <p class="lede">从「一个 token 是怎么算出来的」，到「怎么在 48 张 H200 上把它便宜地算出来」。六个模块、三十九个主题、十二周路线，按依赖顺序排好。</p>
+      <p class="lede">本大纲梳理大语言模型从基本原理到工程实践的知识体系，涵盖模型结构、推理系统、训练系统与框架性能工程四个方向，并给出分阶段的学习路径与验收标准。</p>
     </div>
     <div class="stamp">
-      <div><b>视角</b> 系统 / 平台，非算法研究</div>
+      <div><b>视角</b> 系统与平台工程</div>
       <div><b>前置</b> Python · Linux · 分布式系统</div>
-      <div><b>产出</b> 8 个可跑通的动手项目</div>
+      <div><b>规模</b> 五章 · 三十九个主题</div>
+      <div><b>实践</b> 八个可验收的项目</div>
     </div>
   </div>
 </header>
@@ -332,456 +249,527 @@ section.band > .sub{margin:0 0 20px;color:var(--muted);font-size:13.5px;max-widt
 
 <main class="wrap">
 
-  <section class="map">
-    <p class="sec-label">依赖结构</p>
-    <div class="tiers" id="tiers"></div>
-    <div class="legend">
-      <span><i class="tag c">概念</i> 需要读懂和讲清的原理</span>
-      <span><i class="tag h">动手</i> 必须写代码或跑实验</span>
-      <span><i class="tag t">坑</i> 工程上真实会踩的经验</span>
+  <!-- ===== 导言 ===== -->
+  <section id="导言">
+    <div class="part">
+      <span class="pn">导言</span>
+      <h2>本大纲的定位与使用方法</h2>
+    </div>
+
+    <div class="sub-sec prose">
+      <h3><span class="num">0.1</span>适用读者与视角</h3>
+      <p>本大纲面向具备一定工程基础、希望系统了解大语言模型技术栈的读者，尤其适用于从事推理服务部署、训练平台建设或 GPU 集群运维的工程人员。阅读前应具备 Python 编程能力、Linux 使用经验，以及分布式系统的基本概念。</p>
+      <p>需要说明的是，本大纲采用<b>系统与平台工程的视角</b>，而非算法研究的视角。因此内容重心在于计算成本的构成、系统瓶颈的定位、工程实现的取舍，对模型效果调优、评测榜单与算法创新的覆盖较为有限。若读者的目标是从事模型算法研究，本大纲可作为系统侧的补充材料，但不适合作为主线。</p>
+    </div>
+
+    <div class="sub-sec prose">
+      <h3><span class="num">0.2</span>内容组织</h3>
+      <p>全文分为四个部分。<b>第一部分</b>说明五个模块之间的依赖关系，并给出两条可选的阅读顺序。<b>第二部分</b>为模块详解，按依赖顺序分为五章，每章包含该模块的主题清单，各主题标注为原理、实践或要点三类。<b>第三部分</b>给出一份十二周的学习计划，将各章内容分配至具体周次并明确每周产出。<b>第四部分</b>为参考资料，包含分层的论文清单、已有中文资料的评估，以及针对薄弱环节的补充资源。</p>
+      <p>其中第三章（推理系统）额外附有一条分为八个阶段的入门路径，供希望优先掌握推理方向的读者使用，其设计意图详见 1.2 节。</p>
+    </div>
+
+    <div class="sub-sec prose">
+      <h3><span class="num">0.3</span>使用建议</h3>
+      <p><b>第一，建议从代码进入，将论文作为解释代码的辅助材料。</b>大语言模型领域的论文数量庞大且更新迅速，脱离实现直接阅读论文，短期内可以积累术语，但难以形成稳定的理解。较为有效的做法是先运行并读懂一份最小实现，再通过论文理解其设计动机。</p>
+      <p><b>第二，每完成一章，应当用自己的语言写出该章的核心权衡。</b>本大纲中的每个模块都围绕若干组明确的取舍展开——例如显存与通信的交换、延迟与吞吐的平衡、精度与性能的折中。若无法清晰表述这些取舍，通常说明该章内容尚未真正掌握。</p>
+      <p><b>第三，实践环节应尽可能在真实环境中完成。</b>推理与训练的多数问题只在一定规模下才会显现，玩具环境难以复现真实的瓶颈。若读者具备实际的 GPU 集群与线上服务条件，应当充分利用这一优势，将第三章与第四章的实践项目直接部署于真实环境。</p>
     </div>
   </section>
 
-  <div id="modules"></div>
+  <!-- ===== 第一部分 ===== -->
+  <section id="结构">
+    <div class="part">
+      <span class="pn">第一部分</span>
+      <h2>知识体系结构</h2>
+      <p class="pd">本部分说明五个模块的划分依据与依赖关系，并给出两条可选的阅读顺序。建议在进入具体章节之前完整阅读本部分，以便理解后续内容的组织逻辑。</p>
+    </div>
 
-  <section class="band" id="路线">
-    <h2>十二周路线</h2>
-    <p class="sub">每周一个可验收的产出。周末两天的节奏设计，不是全职。卡住就停在那一周，别往前推——这条线的依赖是真的。</p>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>周</th><th>主题</th><th>产出物</th></tr></thead>
-        <tbody id="weeks"></tbody>
-      </table>
+    <div class="sub-sec">
+      <h3><span class="num">1.1</span>模块依赖关系</h3>
+      <p class="note">下图中，上层模块是下层模块的前置条件。同层模块之间无依赖关系，可以并行推进。</p>
+      <div class="tiers" id="tiers"></div>
+      <div class="legend">
+        <span><i class="tag c">原理</i> 需要理解并能够复述的概念</span>
+        <span><i class="tag h">实践</i> 需要编写代码或开展实验</span>
+        <span><i class="tag t">要点</i> 工程实践中的关键提示</span>
+      </div>
+    </div>
+
+    <div class="sub-sec prose">
+      <h3><span class="num">1.2</span>两条可选的阅读顺序</h3>
+      <p>本大纲提供两条阅读路径，二者覆盖的内容一致，区别仅在于进入顺序。</p>
+      <p><b>完整路径</b>适用于系统性学习，按 M0 至 M4 的顺序依次推进，对应第三部分的十二周计划。该路径的优点是概念铺垫充分，进入每一章时前置知识均已具备；缺点是产出周期较长，前三周主要为概念性内容。</p>
+      <p><b>推理优先路径</b>适用于当前工作与推理服务直接相关、希望尽快获得实际产出的读者。该路径先完成 M0 与 M1 中与推理相关的最小子集（约需半天），随后直接进入第三章的入门路径；完成该路径后，再回补 M1 的其余内容与 M3、M4。第三章 3.1 节给出了该路径的详细阶段划分与验收标准，其内容对应十二周计划中的第四至第八周。</p>
+      <p>选择的依据是产出周期而非难度：两条路径的总工作量相近，推理优先路径将可验证的实践环节前置，因而反馈更快。</p>
     </div>
   </section>
 
-  <section class="band" id="论文">
-    <h2>论文清单</h2>
-    <p class="sub">按「必读 / 扩展」分层。必读的十八篇请精读到能复述系统结构；扩展的知道它解决什么问题、什么时候该翻出来就够。</p>
-    <div class="papers" id="papers"></div>
+  <!-- ===== 第二部分 ===== -->
+  <section id="模块">
+    <div class="part">
+      <span class="pn">第二部分</span>
+      <h2>模块详解</h2>
+      <p class="pd">以下五章按依赖顺序排列。每章左侧说明该模块的范围与学习价值，右侧为主题清单。主题清单供按需查阅，不必严格按顺序阅读。</p>
+    </div>
+    <div id="modules"></div>
   </section>
 
-  <section class="band" id="收藏">
-    <h2>你的收藏，归位</h2>
-    <p class="sub">把已有的十二条链接挂到模块上，并标出它在这套体系里的真实角色。多数人的收藏夹问题不是「不够」，而是「不知道哪条该在什么时候打开」。</p>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>资料</th><th>挂在</th><th>怎么用</th></tr></thead>
-        <tbody id="bookmarks"></tbody>
-      </table>
+  <!-- ===== 第三部分 ===== -->
+  <section id="计划">
+    <div class="part">
+      <span class="pn">第三部分</span>
+      <h2>十二周学习计划</h2>
+      <p class="pd">本计划按业余时间的节奏设计，假设每周投入约八至十小时。每周设有明确产出，用于检验学习效果。</p>
+    </div>
+    <div class="sub-sec">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>周次</th><th>主题</th><th>预期产出</th></tr></thead>
+          <tbody id="weeks"></tbody>
+        </table>
+      </div>
+      <p class="tnote">若采用 1.2 节所述的推理优先路径，第四至第八周的内容将由第三章 3.1 节的八阶段入门路径替代，其余周次保持不变。当某一周的产出未能达成时，建议停留在该周继续推进，不宜提前进入下一周——本计划各周之间存在实际的依赖关系。</p>
+    </div>
+  </section>
+
+  <!-- ===== 第四部分 ===== -->
+  <section id="资料">
+    <div class="part">
+      <span class="pn">第四部分</span>
+      <h2>参考资料</h2>
+      <p class="pd">本部分包含三项内容：分层的论文清单、已有中文资料的覆盖情况评估，以及针对薄弱环节的补充资源。</p>
     </div>
 
-    <div class="gapbox">
-      <h4>覆盖体检：一个大缺口，两个小缺口</h4>
-      <p><b class="gap-big">M2 推理系统几乎是空的。</b>十二条里没有一条讲推理引擎——没有 PagedAttention、没有连续批处理、没有量化与投机解码、没有 vLLM/SGLang 源码。而这恰好是你每天在运维的那一层，也是你的集群条件能把学习效率放大最多的地方。<b>这是整份收藏里最该优先补的窟窿。</b></p>
-      <p><b>小缺口一：M4 的深水区。</b>两份 PyTorch 教程都停在「框架怎么用」，不覆盖 torch.compile 内部、Triton kernel、Nsight/profiler 归因。而 M4 的价值恰恰全在这一段。</p>
-      <p><b>小缺口二：训练基础设施与 RL 系统。</b>Ultra-Scale Playbook 讲透了并行策略，但分布式 checkpoint、容错弹性、慢节点检测，以及 rollout/训练引擎共存这类 RL 系统问题，都还没有落点。</p>
+    <div class="sub-sec">
+      <h3><span class="num">4.1</span>论文清单</h3>
+      <p class="note">按必读与扩展两个层次组织。必读部分的十八篇文献建议精读至能够复述其系统结构；扩展部分只需了解各自解决的问题及适用场景。</p>
+      <div class="papers" id="papers"></div>
+    </div>
+
+    <div class="sub-sec">
+      <h3><span class="num">4.2</span>已有资料的覆盖情况</h3>
+      <p class="note">下表将读者已收集的中文资料对应至各模块，并说明其在本体系中的适用范围。多数学习者面临的问题并非资料不足，而是不清楚各份资料的适用阶段。</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>资料</th><th>对应模块</th><th>适用范围</th></tr></thead>
+          <tbody id="bookmarks"></tbody>
+        </table>
+      </div>
+      <div class="gapbox">
+        <h4>覆盖情况分析</h4>
+        <p><b class="gap-big">主要缺口：第三章推理系统缺乏对应材料。</b>已有的十二份资料中，没有一份涉及推理引擎的实现原理，包括分页注意力、连续批处理、量化与投机解码，以及 vLLM、SGLang 等引擎的源码。对于从事推理服务运维的读者而言，这恰是与日常工作关联最紧密、且具备实践条件的方向，应当优先补充。</p>
+        <p><b>次要缺口之一：框架性能工程的深入内容。</b>两份 PyTorch 中文教程均以框架使用为主，未覆盖 torch.compile 的内部机制、Triton 内核编写与 Nsight 性能归因，而这些正是第五章的核心内容。</p>
+        <p><b>次要缺口之二：训练基础设施与强化学习系统。</b>已有资料对并行策略的覆盖较为充分，但分布式检查点、容错与弹性训练、慢节点检测，以及推理引擎与训练引擎共存等强化学习训练的系统问题，尚无对应材料。</p>
+      </div>
+    </div>
+
+    <div class="sub-sec">
+      <h3><span class="num">4.3</span>补充资源</h3>
+      <p class="note">以下资源针对 4.2 节所分析的缺口，按建议的阅读顺序排列。就本领域而言，研读源码的收益通常高于阅读二手材料。</p>
+      <div class="papers" id="resources"></div>
     </div>
   </section>
 
-  <section class="band" id="资源">
-    <h2>补缺口的资源</h2>
-    <p class="sub">下面这些是上面体检出来的空白处该填的东西，按「先读哪个」排序。读代码的收益远大于读博客。</p>
-    <div class="papers" id="resources"></div>
+  <section class="closing">
+    <h2>结语</h2>
+    <p>本大纲的组织依据是各知识点之间的实际依赖关系，而非主题的重要程度。因此建议按既定顺序推进，在前置内容尚未掌握时跳跃阅读，通常会导致后续内容停留在术语层面。</p>
+    <p>大语言模型的工程实践仍处于快速演进阶段，本大纲中涉及具体框架版本、硬件规格与性能数据的部分会较快过时，而计算成本模型、系统瓶颈的判定方法与各项工程取舍的分析框架则相对稳定。学习时建议将重心放在后者。</p>
+    <p>文中的技术判断反映的是撰写时的理解，不保证全部准确。发现错误之处，欢迎通过 issue 指出。</p>
   </section>
-
-  <div class="closing">
-    <p><strong>三条使用建议。</strong>第一，永远从代码进入，论文只用来解释你在代码里已经看到的东西——反过来做，一个月后什么都不剩。第二，每个模块结束时写一段自己的话解释「这个模块最核心的那个权衡是什么」，写不出来说明没学会。第三，你手上有真实的 H200 集群和 vLLM 部署，这是绝大多数学习者没有的条件——M2 和 M3 的每个动手项目都直接在上面做，别用玩具环境。</p>
-  </div>
 </main>
 
 <script>
 const M = [
   {
-    id:"M0", key:"core", anchor:"算术",
-    title:"算术底座",
-    lede:"不是数学课。只补三样：能口算显存、能口算算力、能看懂数值格式。",
-    why:"整个领域里 80% 的容量规划、选型和「为什么慢」的争论，都能被三个公式终结。",
-    node:"张量算术、数值格式，以及三个必须能口算的公式。",
+    id:"M0", ch:"第一章", key:"core", anchor:"计算基础",
+    title:"计算基础",
+    lede:"本章不涉及数学推导，目标是建立三项能力：估算显存占用、估算算力需求、理解数值格式的取舍。",
+    why:"后续各章在讨论容量规划与性能瓶颈时会反复使用本章的三个公式。缺少这一基础，相关讨论只能停留在定性层面。",
+    node:"张量运算的成本模型、数值格式，以及三个基础估算公式。",
     items:[
-      ["c","矩阵乘的成本模型","一次 M×K·K×N 的 GEMM 是 <code>2·M·N·K</code> FLOPs（乘加各算一次）。同时算它读写了多少字节，两者相除得到<b>算术强度</b>（FLOP/Byte）——这是后面所有性能分析的唯一坐标。"],
-      ["c","反向传播与 3× 定律","前向 1 份算力，反向约 2 份（对输入求导 + 对权重求导），合计 3×。这就是训练算力经验式 <code>C ≈ 6ND</code> 里那个 6 的来源（2 来自 GEMM，3 来自前向反向）。"],
-      ["c","交叉熵、logits、perplexity","<code>ppl = exp(loss)</code>。知道 loss 从 2.0 降到 1.9 意味着什么，才能判断一次训练是不是在原地打转。"],
-      ["c","数值格式全家","FP32 / TF32 / BF16 / FP16 / FP8(E4M3,E5M2) / INT8 / INT4 的指数位与尾数位分布。核心区别是<b>动态范围 vs 精度</b>：BF16 和 FP32 指数位相同所以训练不需要 loss scaling，FP16 需要——这一条解释了业界为什么集体切到 BF16。"],
-      ["h","三个口算公式","把它们抄在便签上：<br>① 权重显存 = 参数量 × 每参数字节<br>② KV cache = <code>2 × L × H_kv × d_head × S × B × dtype</code><br>③ 训练算力 ≈ <code>6ND</code>（N 参数量，D token 数）"],
-      ["h","拿真模型验算","打开 Llama-3-70B 的 <code>config.json</code>：L=80, H_kv=8, d_head=128。算出每 token 的 KV cache = 2×8×128×2B×80 ≈ <b>320 KiB</b>，8K 上下文一条序列就吃 2.5 GiB。这个数字会在你之后每一次容量规划里出现。"],
-      ["t","别陷进推导","这一层不需要证明任何东西。你需要的是「能在会议上五秒内算出 141GB 的 H200 单卡能放下多少并发」，不是能推导 attention 的梯度。"]
+      ["c","矩阵乘法的成本模型","一次 M×K 与 K×N 的矩阵乘法需要 <code>2·M·N·K</code> 次浮点运算，其中乘法与加法各计一次。将其与该运算读写的字节数相除，得到<b>算术强度</b>（arithmetic intensity，单位为 FLOP/Byte）。这一指标是后续全部性能分析的共同坐标。"],
+      ["c","反向传播的计算量","反向传播需要分别对输入和权重求导，其计算量约为前向传播的两倍，前向与反向合计约为三倍。该系数与矩阵乘法的系数 2 相乘，即得到训练算力经验公式 <code>C ≈ 6ND</code> 中的系数 6。"],
+      ["c","交叉熵与困惑度","语言模型的训练目标为交叉熵损失，困惑度与其关系为 <code>ppl = exp(loss)</code>。掌握两者的换算关系，才能判断训练过程中损失值的变化是否具有实际意义。"],
+      ["c","数值格式","需要了解 FP32、TF32、BF16、FP16、FP8（含 E4M3 与 E5M2 两种编码）、INT8 与 INT4 各自的指数位与尾数位分配。核心差异在于<b>动态范围与精度之间的取舍</b>：BF16 与 FP32 的指数位宽度相同，因此训练时无需损失缩放（loss scaling），而 FP16 则需要。这一点解释了业界从 FP16 转向 BF16 的原因。"],
+      ["h","掌握三个估算公式","以下三式应能脱离参考资料直接使用：<br>① 权重显存 = 参数量 × 每参数字节数<br>② KV Cache = <code>2 × L × H_kv × d_head × S × B × dtype</code><br>③ 训练算力 ≈ <code>6ND</code>，其中 N 为参数量，D 为训练 token 数"],
+      ["h","以实际模型验算","以 Llama-3-70B 为例，其层数 L=80，KV 头数 H_kv=8，头维度 d_head=128。代入公式可得每个 token 的 KV Cache 占用约为 2×8×128×2×80 ≈ <b>320 KiB</b>，一条 8K 上下文的序列即占用约 2.5 GiB。此类计算将在后续的容量规划中反复出现。"],
+      ["t","本章的范围界定","本章不要求掌握任何数学证明。判断标准是：能否在讨论中迅速估算出一张 141 GB 显存的 H200 可支持的并发规模。若能做到，即可进入下一章。"]
     ]
   },
   {
-    id:"M1", key:"core", anchor:"模型",
-    title:"模型原理",
-    lede:"Transformer 的每个部件解决什么问题、花多少算力、占多少显存。",
-    why:"推理优化的每个技巧都是在攻击某个具体部件的成本。不知道部件，优化就是背名词。",
-    node:"Transformer 的部件清单，以及每个部件的成本账。",
+    id:"M1", ch:"第二章", key:"core", anchor:"模型结构",
+    title:"模型结构原理",
+    lede:"逐一说明 Transformer 各组成部分所解决的问题、所需的计算量，以及所占用的显存。",
+    why:"推理优化的各项技术本质上都是针对某个具体组件的成本进行改进。不了解组件构成，优化手段便无从理解其动机。",
+    node:"Transformer 的组件构成及各组件的成本分析。",
     items:[
-      ["c","Tokenizer","BPE / Byte-level BPE / SentencePiece。工程影响：词表大小同时决定 embedding 参数量和输出 logits 层的算力；中文和代码的 token 效率差异直接换算成 API 成本；chat template 与特殊 token 是线上事故高发区。"],
-      ["c","位置编码与 RoPE","绝对位置 → 学习式 → RoPE（把位置编成旋转相位，让点积天然带上相对距离）。长上下文外推靠调 RoPE base、NTK-aware、YaRN——这些是「把 8K 模型改成 128K」的实际手段。"],
-      ["c","注意力机制","QKV 投影 → 缩放点积 → causal mask → 多头拼接。两个成本必须刻进脑子：算力随序列长度 <b>O(S²)</b>，KV cache 显存随序列长度 <b>O(S)</b>。prefill 贵在前者，decode 贵在后者。"],
-      ["c","MHA → MQA → GQA → MLA","这条演进线只有一个目的：<b>压 KV cache</b>。KV head 数是推理成本最直接的旋钮——Llama-3-70B 用 GQA 把 64 个 KV head 压到 8 个，KV cache 直接小 8 倍。MLA（DeepSeek）更进一步把 KV 压成低秩隐向量。"],
-      ["c","FFN 与 SwiGLU","中间层通常约 3.5× hidden size，<b>FFN 占了模型参数量的大头（约 2/3）</b>。所以「模型有多大」这件事，主要是 FFN 说了算，不是 attention。"],
-      ["c","归一化与残差","LayerNorm → RMSNorm（省掉减均值，更快）。pre-norm 让深层网络训得稳，代价是表达力略降。QK-Norm 是近两年治 loss spike 的常用补丁。"],
-      ["c","MoE","router top-k 选专家、共享专家、负载均衡辅助 loss。对基建最关键的一条：<b>推理算力按激活参数算，显存按总参数算</b>。DeepSeek-V3 是 671B 总参 / 37B 激活——算力像 37B，显存像 671B。这个错位决定了 MoE 的部署形态。"],
-      ["c","解码与采样","greedy / temperature / top-k / top-p / min-p、repetition penalty、logit bias。顺带理解为什么 beam search 在开放式生成里基本退场（多样性塌缩 + 批处理不友好）。"],
-      ["c","多模态的额外账","ViT / SigLIP 编码器 + projector 把图像投进 token 空间。一张高分辨率图可能膨胀成上千个 token——这对 prefill 时间和 KV cache 的冲击，比多模态模型本身的参数量大得多。"],
-      ["h","跑通 nanoGPT","Karpathy 的 nanoGPT 约 300 行，在 Shakespeare 数据集上几分钟出通顺文本。目标不是训得好，是把「数据 → 前向 → loss → 反向 → 采样」这条链路在自己机器上完整跑一遍。"],
-      ["h","闭卷手写 attention + KV cache","关掉所有参考，用 PyTorch 写一个带 KV cache 的 GQA 前向。写得出来才算过了这一模块。"],
-      ["t","从代码进，不从论文进","HF <code>transformers/models/llama/modeling_llama.py</code> 是这个领域最好的第二本教材。它把上面所有概念都写成了两百行可读的 Python。"]
+      ["c","分词器","常见实现包括 BPE、Byte-level BPE 与 SentencePiece。其工程影响体现在三个方面：词表规模同时决定嵌入层的参数量与输出层的计算量；不同语言与代码的分词效率差异会直接转化为调用成本；对话模板与特殊 token 的处理是线上故障的常见来源。"],
+      ["c","位置编码与 RoPE","位置编码经历了从绝对位置编码、可学习位置编码到旋转位置编码（RoPE）的演进。RoPE 将位置信息编码为旋转相位，使注意力点积天然包含相对距离信息。长上下文外推主要通过调整 RoPE 基频、NTK-aware 插值与 YaRN 等方法实现，这些是将短上下文模型扩展为长上下文模型的实际手段。"],
+      ["c","注意力机制","计算流程为 QKV 投影、缩放点积、因果掩码与多头结果拼接。需要重点掌握两项成本特征：计算量随序列长度呈 <b>O(S²)</b> 增长，KV Cache 显存随序列长度呈 <b>O(S)</b> 增长。前者是 prefill 阶段的主要开销，后者是 decode 阶段的主要开销。"],
+      ["c","注意力变体的演进","从 MHA 到 MQA、GQA 直至 MLA，这一演进路线的共同目标是<b>压缩 KV Cache</b>。KV 头数是推理成本最直接的调节参数：Llama-3-70B 采用 GQA 将 64 个 KV 头压缩至 8 个，KV Cache 占用相应降低为原来的八分之一。DeepSeek 提出的 MLA 进一步将 KV 压缩为低秩隐向量表示。"],
+      ["c","前馈网络与 SwiGLU","前馈网络的中间层维度通常约为隐藏层维度的 3.5 倍，<b>其参数量约占模型总参数量的三分之二</b>。因此模型规模主要由前馈网络决定，而非注意力层。这一事实与多数人的初始判断不符。"],
+      ["c","归一化与残差连接","归一化方法从 LayerNorm 演进至 RMSNorm，后者省略了均值中心化步骤，计算更为高效。前置归一化提升了深层网络的训练稳定性，代价是表达能力略有下降。QK-Norm 是近年用于抑制损失尖峰的常见改进。"],
+      ["c","混合专家模型","其组成包括路由器的 top-k 选择、共享专家设计，以及用于负载均衡的辅助损失。对基础设施规划最为关键的一点是：<b>推理计算量取决于激活参数量，而显存占用取决于总参数量</b>。以 DeepSeek-V3 为例，总参数量为 671B 而激活参数量为 37B，其计算特征接近 37B 模型，显存特征则接近 671B 模型。这一错位决定了 MoE 模型的部署形态。"],
+      ["c","解码与采样策略","包括贪心解码、温度采样、top-k、top-p 与 min-p，以及重复惩罚与 logit 偏置等控制手段。同时需要理解束搜索在开放式生成任务中逐渐被弃用的原因：生成结果多样性不足，且与批处理机制不易配合。"],
+      ["c","多模态模型的额外开销","多模态模型通常由视觉编码器（如 ViT 或 SigLIP）与投影层将图像映射至 token 空间。一张高分辨率图像可能展开为上千个 token，其对 prefill 时间与 KV Cache 的影响，远大于视觉编码器本身参数量所带来的影响。"],
+      ["h","运行 nanoGPT","nanoGPT 项目代码约三百行，可在小型数据集上于数分钟内训练至生成通顺文本。本项练习的目的不在于训练效果，而在于完整体验从数据准备、前向计算、损失计算、反向传播到采样输出的全过程。"],
+      ["h","独立实现注意力机制与 KV Cache","在不参考任何资料的前提下，使用 PyTorch 实现一个带 KV Cache 的 GQA 前向计算。能够独立完成这一实现，方可认为本章内容已经掌握。"],
+      ["t","建议的学习入口","建议从代码入手而非从论文入手。HuggingFace Transformers 项目中的 <code>modeling_llama.py</code> 以约两百行可读的 Python 代码实现了上述全部概念，是本章最合适的配套材料。"]
     ]
   },
   {
-    id:"M2", key:"infer", anchor:"推理", ladder:true,
+    id:"M2", ch:"第三章", key:"infer", anchor:"推理系统", ladder:true,
     title:"推理系统",
-    lede:"prefill 算力密集、decode 带宽密集——所有推理优化都是在这个二分上做文章。",
-    why:"这是你日常真正在运维的东西。学完这一模块，你能对着一条延迟曲线说出瓶颈在哪、该动哪个旋钮。",
-    node:"KV cache、批处理调度、量化、投机解码、引擎内核。整个领域最工程化的一块——内含本周开始的入门阶梯。",
+    lede:"推理过程分为 prefill 与 decode 两个阶段，前者受计算能力限制，后者受显存带宽限制。推理优化的各项技术均建立在这一区分之上。",
+    why:"本章内容与推理服务的日常运维直接相关。完成本章后，应能够依据延迟曲线判断系统瓶颈所在，并确定相应的调节参数。",
+    node:"KV Cache 管理、请求调度、量化、投机解码与计算内核。本章附有分阶段的入门路径。",
     items:[
-      ["c","两阶段模型（这一模块的钥匙）","<b>Prefill</b>：整个 prompt 一次前向，大 GEMM，compute-bound，决定 TTFT。<b>Decode</b>：一次一个 token，GEMM 退化成瘦长的矩阵-向量乘，memory-bandwidth-bound，决定 TPOT。两个阶段的优化手段几乎完全不同——把这条记牢，后面所有技巧都能自己推出来。"],
-      ["c","Roofline 与「为什么必须攒批」","H200 约 4.8 TB/s HBM、BF16 稠密算力约 495 TFLOPS，ridge point ≈ <b>103 FLOP/Byte</b>。decode 阶段的算术强度大致等于 batch size，所以 <b>batch 小于 100 时必然是 memory-bound</b>——GPU 在等 HBM，不在算。这直接推出：提吞吐的第一杠杆永远是攒批，不是换更快的卡。"],
-      ["c","指标语言","TTFT（首 token 延迟）/ TPOT 或 ITL（token 间延迟）/ 端到端延迟 / 吞吐 / <b>goodput</b>（满足 SLO 前提下的有效吞吐）。学会画延迟-吞吐权衡曲线，并理解「峰值吞吐」这个单一数字为什么基本没用。"],
-      ["c","KV cache 管理","PagedAttention 把 KV 切成固定大小的 block + block table，消灭碎片（这是 vLLM 的立身之本）。往上叠：prefix caching / RadixAttention（SGLang 的前缀树复用）、KV cache FP8 量化、CPU/NVMe offload。长 prompt 场景里，<b>前缀缓存命中率是头号指标</b>。"],
-      ["c","批处理与调度","static batching → continuous batching（Orca，请求级而非批级调度，完成即换出）→ <b>chunked prefill</b>（把长 prefill 切片塞进 decode 批里，压住 TTFT 抖动）。再往下是抢占策略：recompute 还是 swap、优先级与公平性。"],
-      ["c","P/D 分离","prefill 和 decode 对硬件的需求根本不同，于是把它们拆到不同 GPU 池，中间通过 NVLink/RDMA 传 KV。代表作 DistServe、Splitwise、Mooncake，工程落地看 NVIDIA Dynamo。这是当前推理架构演进的主线。"],
-      ["c","推理侧并行","<b>TP</b> 是主力（每层两次 all-reduce，所以通常不跨节点）；<b>PP</b> 用于跨机放超大模型，代价是流水气泡；<b>EP</b> 用于 MoE；<b>SP/CP</b> 用于超长上下文。关键判断：加大 TP 降延迟但降单卡效率，什么时候该停。"],
-      ["c","关键内核","FlashAttention 1/2/3（tiling + 在线 softmax，不落地 S×S 矩阵）、FlashDecoding（按 KV 维度切分，救 decode 阶段的低并行度）、fused RMSNorm/SwiGLU、<b>CUDA Graph</b>（decode 阶段单步只有几百微秒，kernel launch 开销占比极高，CUDA Graph 是必开项）。"],
-      ["c","量化","W8A8 / W4A16 两条路线；GPTQ、AWQ、SmoothQuant、FP8（H200 原生支持，是当前性价比最高的选择）、INT4。粒度上 per-tensor / per-channel / group-wise 精度依次变好、开销依次变大。KV cache 量化是独立的一档收益。"],
-      ["c","投机解码","draft model / Medusa / EAGLE / n-gram lookahead。加速比 ≈ 平均接受长度 ÷ 单步额外成本。<b>关键性质：低 batch 时收益大，高 batch 时因为算力已经饱和反而变亏</b>——所以它是延迟优化手段，不是吞吐优化手段。"],
-      ["c","结构化输出","grammar / FSM 约束解码（XGrammar、Outlines）。工程上要注意它对 logits 处理和批处理流水的干扰，以及编译 grammar 的冷启动开销。"],
-      ["c","服务与路由层","多副本负载均衡、<b>KV-aware / prefix-aware 路由</b>（把同前缀的请求送到同一副本，命中缓存）、autoscaling 的冷启动难题（加载 70B 权重要几十秒）、多 LoRA 服务（S-LoRA）、多供应商网关的定位。"],
-      ["c","引擎生态","<b>vLLM</b>（重点读 V1 架构：EngineCore 进程分离、零开销调度、piecewise CUDA graph）、<b>SGLang</b>（RadixAttention、结构化输出强）、<b>TensorRT-LLM</b>（极致但封闭）、lmdeploy；端侧 llama.cpp / MLX；编排层 Ray Serve LLM、Dynamo、KServe。"],
-      ["h","手写迷你推理引擎","约 200 行：KV cache + 分页分配器 + continuous batching 调度循环。用一个小模型跑起来，和 HF <code>generate()</code> 对比吞吐。这个项目的价值超过读十篇论文。"],
-      ["h","在自己的 H200 池上做压测矩阵","用 <code>vllm bench serve</code> 扫 TP × 量化 × chunked-prefill × 并发，画出完整的延迟-吞吐曲线族。你有真集群，这件事别人做不了。"],
-      ["h","精读 vLLM V1 源码","从 <code>EngineCore.step()</code> 一路追到 attention backend。带着问题读：一个请求从进队列到吐出第一个 token，经过了哪些数据结构？"],
-      ["t","只报 tokens/s 的 benchmark 是废的","没有并发数、没有输入输出长度分布、没有 SLO 约束的吞吐数字不可比。压测报告至少要写清这四项。"],
-      ["t","GPU 利用率 100% ≠ 算力打满","<code>nvidia-smi</code> 的 utilization 只表示「有 kernel 在跑」。decode 阶段 SM 大部分时间在等 HBM，利用率显示 100% 而实际 MFU 可能只有 5%。要判断真实瓶颈，看 Nsight 的 memory throughput 或自己算 MFU。"]
+      ["c","两阶段模型","prefill 阶段一次性处理全部输入，矩阵规模较大，性能受计算能力限制，决定首 token 延迟；decode 阶段逐个生成 token，矩阵乘法退化为矩阵与向量的乘法，性能受显存带宽限制，决定 token 间延迟。两个阶段的优化手段几乎完全不同，这一区分是理解本章全部内容的基础。"],
+      ["c","Roofline 模型与批处理的必要性","以 H200 为例，其显存带宽约为 4.8 TB/s，BF16 稠密算力约为 495 TFLOPS，性能拐点约为 <b>103 FLOP/Byte</b>。decode 阶段的算术强度大致等于批大小，因此<b>当批大小低于 100 时系统必然处于带宽受限状态</b>，即计算单元处于等待显存的状态。由此可得出一项基本结论：提升吞吐量的首要手段是增大批规模，而非更换算力更强的硬件。"],
+      ["c","性能指标体系","包括首 token 延迟（TTFT）、token 间延迟（TPOT 或 ITL）、端到端延迟、吞吐量，以及<b>有效吞吐量</b>（goodput，即满足服务等级目标前提下的吞吐量）。需要掌握延迟与吞吐关系曲线的绘制方法，并理解单一的峰值吞吐量指标为何缺乏参考价值。"],
+      ["c","KV Cache 管理","PagedAttention 将 KV Cache 划分为固定大小的块并通过块表索引，从而消除显存碎片，这是 vLLM 的核心机制。在此基础上可叠加前缀缓存或基数树复用（SGLang 的 RadixAttention）、KV Cache 的 FP8 量化，以及向主机内存或 NVMe 的换出。在长提示词场景中，<b>前缀缓存命中率是首要观测指标</b>。"],
+      ["c","请求调度与批处理","调度机制的演进为静态批处理、连续批处理（Orca，以请求为粒度调度，完成即替换），以及<b>分块预填充</b>（将长 prefill 切分后与 decode 请求混合调度，以抑制首 token 延迟的波动）。其下层涉及抢占策略（重算或换出）、请求优先级与调度公平性。"],
+      ["c","prefill 与 decode 分离部署","两个阶段对硬件的需求存在本质差异，因此可将其部署于不同的计算资源池，中间通过 NVLink 或 RDMA 传输 KV Cache。代表性工作包括 DistServe、Splitwise 与 Mooncake，工程实现可参考 NVIDIA Dynamo。这是当前推理架构演进的主要方向。"],
+      ["c","推理侧的并行策略","<b>张量并行</b>是主要手段，每个 Transformer 层需要两次 all-reduce 通信，因此通常不跨节点部署；<b>流水线并行</b>用于跨节点承载超大模型，代价是引入流水线空泡；<b>专家并行</b>用于 MoE 模型；<b>序列并行与上下文并行</b>用于超长上下文场景。关键判断在于：增大张量并行规模可降低延迟，但会降低单卡效率，需要确定其合理边界。"],
+      ["c","关键计算内核","FlashAttention 系列通过分块计算与在线 softmax，避免了 S×S 注意力矩阵的显存落地；FlashDecoding 通过在 KV 维度上切分，改善 decode 阶段并行度不足的问题；此外还包括融合的 RMSNorm 与 SwiGLU 内核。<b>CUDA Graph</b> 在 decode 阶段尤为重要：该阶段单步耗时仅数百微秒，内核启动开销占比很高，因此应当默认启用。"],
+      ["c","量化","主要分为 W8A8 与 W4A16 两条技术路线，代表方法包括 GPTQ、AWQ、SmoothQuant、FP8（H200 提供原生支持，当前性价比最高）与 INT4。在量化粒度上，per-tensor、per-channel 与 group-wise 三者的精度依次提升，开销也依次增加。KV Cache 量化是独立于权重量化的另一项收益来源。"],
+      ["c","投机解码","实现方式包括独立草稿模型、Medusa、EAGLE 与基于 n-gram 的前瞻。其加速比约等于平均接受长度与单步额外开销之比。需要注意其一项<b>关键性质：在低并发场景下收益显著，在高并发场景下因算力已接近饱和，反而可能造成性能下降</b>。因此它属于延迟优化手段，而非吞吐量优化手段。"],
+      ["c","结构化输出","通过文法或有限状态机约束解码过程，代表实现包括 XGrammar 与 Outlines。工程上需要关注其对 logits 处理流程与批处理流水线的干扰，以及文法编译带来的冷启动开销。"],
+      ["c","服务与路由层","涉及多副本负载均衡、<b>基于前缀或 KV Cache 感知的请求路由</b>（将具有相同前缀的请求导向同一副本以提升缓存命中率）、自动扩缩容的冷启动问题（加载 70B 模型权重需要数十秒），以及多 LoRA 适配器服务。"],
+      ["c","主流推理引擎","<b>vLLM</b> 为当前事实标准，建议重点研读其 V1 架构，包括 EngineCore 的进程分离设计、零开销调度与分段 CUDA Graph；<b>SGLang</b> 在 RadixAttention 与结构化输出方面具有特点；<b>TensorRT-LLM</b> 性能优异但封闭性较强；此外还有 lmdeploy。端侧部署可关注 llama.cpp 与 MLX，编排层可关注 Ray Serve LLM、Dynamo 与 KServe。"],
+      ["h","实现最小推理引擎","约两百行代码，包含 KV Cache、分页分配器与连续批处理调度循环。接入一个小型模型运行，并与 HuggingFace 的 <code>generate()</code> 接口进行吞吐量对比。本项实践的收获通常超过阅读十篇相关论文。"],
+      ["h","在真实集群上开展压测","使用 <code>vllm bench serve</code>，遍历张量并行规模、量化方案、分块预填充开关与并发数的组合，绘制完整的延迟与吞吐关系曲线族。具备真实集群条件是开展此项工作的前提。"],
+      ["h","研读 vLLM V1 源码","阅读路径为 <code>EngineCore.step()</code> 至注意力后端。建议带着具体问题进行：一个请求从进入队列到输出首个 token，经过了哪些数据结构。"],
+      ["t","压测报告的必要信息","仅给出每秒 token 数，而不说明并发数、输入输出长度分布与服务等级目标的压测结果不具备可比性。压测报告至少应完整记录上述四项信息。"],
+      ["t","GPU 利用率指标的局限","<code>nvidia-smi</code> 显示的利用率仅表示存在内核在执行。decode 阶段计算单元大部分时间处于等待显存的状态，此时利用率可能显示为 100%，而实际算力利用率可能仅有百分之五。判断真实瓶颈应参考 Nsight 的显存吞吐指标，或自行计算模型算力利用率。"]
     ]
   },
   {
-    id:"M3", key:"train", anchor:"训练",
+    id:"M3", ch:"第四章", key:"train", anchor:"训练系统",
     title:"训练系统",
-    lede:"并行策略、显存账本、通信、容错。以及后训练与 RL 这条正在变成主战场的链路。",
-    why:"训练的难点几乎全在系统侧：显存怎么放、通信怎么重叠、坏卡怎么恢复。这些正好是基建工程师的主场。",
-    node:"从数据管线到 5D 并行，再到 SFT / DPO / RLVR 后训练链路。",
+    lede:"涵盖并行策略、显存规划、通信优化与容错机制，以及从监督微调到强化学习的后训练流程。",
+    why:"训练的主要难点集中于系统层面：显存如何分配、通信如何与计算重叠、故障如何恢复。这些问题正是基础设施工程的专长所在。",
+    node:"从数据管线到多维并行，以及监督微调、DPO 与 RLVR 后训练流程。",
     items:[
-      ["c","预训练全景","数据 → tokenizer → 并行策略 → 训练 → 评测。<b>成本的大头在数据质量和训练稳定性上，不在模型结构</b>——这一点和大部分人的直觉相反。"],
-      ["c","数据工程","来源与清洗、精确去重与 MinHash 模糊去重、质量分类器、配比与退火（annealing：训练末期换高质量数据）、benchmark 污染检测、packing 与 document mask。"],
-      ["c","Scaling law 与预算分配","Kaplan → Chinchilla（计算最优约 20 tokens/参数）→ 现实转向：因为推理成本要摊到无数次调用上，Llama 3 这类模型用了远超 Chinchilla 最优的数据量，故意把训练成本换成更小更快的模型。"],
-      ["c","数据并行谱系","DDP → ZeRO-1（切 optimizer state）→ ZeRO-2（+梯度）→ ZeRO-3 / FSDP（+权重）→ FSDP2 / DTensor。每往下一级省显存、多一轮通信——这就是那个核心权衡。"],
-      ["c","张量并行","按列/行切分权重，每个 transformer 层需要两次 all-reduce。通信量大且在关键路径上，所以 <b>TP 一般不跨节点</b>，只在 NVLink 域内做。"],
-      ["c","流水并行","GPipe → 1F1B → interleaved 1F1B。气泡率约 <code>(P-1)/(M+P-1)</code>（P 为 stage 数，M 为 micro-batch 数）——记住这个式子，就知道为什么 PP 需要大量 micro-batch 才划算。"],
-      ["c","序列 / 上下文并行","Ulysses、Ring Attention。长上下文训练的显存瓶颈是<b>激活值</b>而非权重，这是它和长上下文推理（瓶颈是 KV cache）的根本区别。"],
-      ["c","专家并行","MoE 的 all-to-all 通信、专家负载不均导致的木桶效应。DeepSeek-V3 的 DualPipe 是这个方向近年最值得读的工程设计。"],
-      ["c","并行策略的组合与拓扑映射","3D/4D/5D 并行怎么排布到 NVLink 域和 IB 域。<b>拓扑感知的 rank 排布能决定一半的性能</b>——通信量最大的 TP 放进 NVLink，通信量最小的 PP 跨机。"],
-      ["c","显存账本","权重 + 梯度 + optimizer state（Adam 的 fp32 动量约为权重的 2 倍）+ 激活。激活重计算分 full 和 selective（只重算便宜的部分，保留 attention 输出这类贵的）。会算这本账，才谈得上选并行策略。"],
-      ["c","混合精度与 FP8 训练","AMP、bf16 + fp32 master weights、Transformer Engine 的 FP8 训练（H200 上的实打实收益）。理解 bf16 为什么不需要 loss scaling。"],
-      ["c","通信","NCCL 的 all-reduce / reduce-scatter / all-gather，ring 与 tree 算法的带宽差异；<b>计算通信重叠</b>是分布式训练性能的核心技巧；NVLink vs InfiniBand vs RoCE 的带宽与延迟量级。"],
-      ["c","训练稳定性","loss spike 的成因与处置、梯度裁剪、初始化、z-loss、µP（超参从小模型迁移到大模型）、断点续训的确定性（数据顺序、RNG 状态）。"],
-      ["c","训练基础设施","分布式 checkpoint（分片、异步保存、<code>torch.distributed.checkpoint</code>）、容错与弹性训练、慢节点/坏卡自动检测、<b>故障率与集群规模的关系</b>（千卡规模下几小时一次故障是常态，checkpoint 频率由此倒推）、数据加载吞吐、共享存储的选型与缓存配置。"],
-      ["c","可观测性","MFU 与 HFU 怎么算、tokens/s/GPU、per-step 时间分解（前向/反向/优化器/通信/数据）。<b>BF16 预训练做到 40–50% MFU 算健康</b>，低于 30% 一定有系统问题。"],
-      ["c","SFT","数据配方、只在 assistant 回复上算 loss、多轮对话的 mask 构造、样本 packing 与 cross-document attention 隔离。"],
-      ["c","PEFT","LoRA / QLoRA / DoRA。工程要点：秩和目标模块怎么选、权重合并、以及推理侧的多 adapter 服务。"],
-      ["c","对齐与 RL","reward model → PPO（InstructGPT）→ DPO（去掉 RM，直接用偏好对）→ GRPO（去掉 critic，组内相对优势）→ RLVR / 可验证奖励，也就是 DeepSeek-R1 这类推理模型的训练范式。"],
-      ["c","RL 训练的系统工程","<b>当下最硬的系统问题</b>：rollout 引擎（vLLM/SGLang）和训练引擎要共存在同一批 GPU 上，每轮要做权重同步（NCCL broadcast 而非落盘）；colocate 还是 disaggregate；长尾 rollout 拖垮整批的调度难题。框架看 veRL、OpenRLHF、slime、TRL。"],
-      ["c","评测","loss 和 ppl 远远不够；标准 benchmark 与污染问题；LLM-as-judge 的偏置；arena 类人评的成本与噪声。"],
-      ["c","框架地图","<b>torchtitan</b>（最干净，读源码首选）、Megatron-Core（工业级、复杂）、DeepSpeed、NeMo；后训练用 TRL / LLaMA-Factory / Axolotl。"],
-      ["h","跑一个 1B 预训练","用 torchtitan 或 FSDP2 在 8 卡上跑起来，算出 MFU，做 FSDP / TP / PP 三种策略的对比表。目标不是训出好模型，是拿到自己的性能数据。"],
-      ["h","走通一条后训练链路","同一个基座：SFT → LoRA → DPO，每一步都做前后评测对比。这条链路走过一遍，你就理解了「模型定制」这件事的真实成本。"],
-      ["h","故障注入演练","在自己的 slurm 池上故意 kill 掉一个节点，验证 checkpoint 恢复路径和恢复耗时。这是训练平台最该先做的一件事。"],
-      ["t","先修存储和 checkpoint，再谈并行调优","绝大多数「训练慢」的根因在 dataloader 和 IO，不在并行策略。上来就调 TP/PP 是把顺序搞反了。"],
-      ["t","共享存储的缓存配置会杀死节点","分布式文件系统的本地缓存如果不设上限，会把节点系统盘写爆，进而触发磁盘压力驱逐、连锁死锁。缓存容量必须显式配，且要留出安全裕度。"]
+      ["c","预训练的整体流程","依次为数据准备、分词器训练、并行策略设计、训练执行与效果评测。其中<b>主要成本集中于数据质量与训练稳定性，而非模型结构设计</b>，这一点与多数人的初始判断不同。"],
+      ["c","数据工程","包括数据来源与清洗、精确去重与基于 MinHash 的模糊去重、质量分类器、数据配比与训练末期的退火策略（即在后期切换至高质量数据）、评测集污染检测，以及样本拼接与文档掩码。"],
+      ["c","缩放定律与预算分配","从 Kaplan 等人的早期工作到 Chinchilla 提出的计算最优配置（约二十 token 每参数）。当前实践已发生转向：由于推理成本需要分摊至大量调用，Llama 3 等模型采用了远超计算最优点的训练数据量，以更高的训练成本换取更小、推理更快的模型。"],
+      ["c","数据并行技术谱系","从 DDP 到 ZeRO 的三个级别（依次切分优化器状态、梯度与权重），再到 FSDP 与 FSDP2。每提升一个级别可节省更多显存，同时增加一轮通信开销，这构成了该方向的核心权衡。"],
+      ["c","张量并行","按行或列切分权重矩阵，每个 Transformer 层需要两次 all-reduce 通信。由于通信量大且位于关键路径上，<b>张量并行通常不跨节点部署</b>，仅在 NVLink 域内使用。"],
+      ["c","流水线并行","从 GPipe 到 1F1B 再到交错式 1F1B。空泡率约为 <code>(P-1)/(M+P-1)</code>，其中 P 为流水级数，M 为微批数量。掌握该公式即可理解流水线并行为何需要足够多的微批才具备效率优势。"],
+      ["c","序列并行与上下文并行","代表方法包括 Ulysses 与 Ring Attention。<b>长上下文训练的显存瓶颈在于激活值而非权重</b>，这是它与长上下文推理（瓶颈在于 KV Cache）的根本区别。"],
+      ["c","专家并行","MoE 模型需要 all-to-all 通信，专家负载不均衡会导致整体效率受最慢分片制约。DeepSeek-V3 提出的 DualPipe 是该方向近年较有参考价值的工程设计。"],
+      ["c","并行策略的组合与拓扑映射","多维并行策略需要与 NVLink 域和 InfiniBand 域的物理拓扑相匹配。<b>拓扑感知的进程排布对整体性能的影响可达一半左右</b>：通信量最大的张量并行应置于 NVLink 域内，通信量最小的流水线并行可跨节点部署。"],
+      ["c","显存构成分析","显存占用由权重、梯度、优化器状态（Adam 的 FP32 动量约为权重的两倍）与激活值四部分构成。激活重算分为全量重算与选择性重算两种，后者仅重算开销较低的部分，保留注意力输出等重算代价较高的中间结果。掌握显存构成是选择并行策略的前提。"],
+      ["c","混合精度与 FP8 训练","包括自动混合精度、BF16 配合 FP32 主权重，以及基于 Transformer Engine 的 FP8 训练（在 H200 上具有实际收益）。需要理解 BF16 无需损失缩放的原因。"],
+      ["c","集合通信","涉及 NCCL 提供的 all-reduce、reduce-scatter 与 all-gather 原语，以及环形算法与树形算法的带宽差异。<b>计算与通信的重叠</b>是分布式训练性能优化的核心技术。此外需要了解 NVLink、InfiniBand 与 RoCE 的带宽与延迟量级。"],
+      ["c","训练稳定性","包括损失尖峰的成因与处置、梯度裁剪、参数初始化、z-loss 正则、µP 超参迁移方法，以及断点续训的确定性保障（数据顺序与随机数状态的恢复）。"],
+      ["c","训练基础设施","包括分布式检查点（分片存储、异步保存、<code>torch.distributed.checkpoint</code>）、容错与弹性训练、慢节点与故障卡的自动检测、<b>故障率与集群规模的关系</b>（千卡规模下数小时发生一次故障属于常态，检查点频率应据此确定）、数据加载吞吐，以及共享存储的选型与缓存配置。"],
+      ["c","可观测性指标","包括模型算力利用率（MFU）与硬件算力利用率（HFU）的计算方法、每卡每秒 token 数，以及单步耗时在前向、反向、优化器、通信与数据加载各环节的分解。<b>BF16 预训练达到百分之四十至五十的 MFU 属于正常水平</b>，低于百分之三十通常表明存在系统层面的问题。"],
+      ["c","监督微调","涉及数据配方设计、仅在助手回复部分计算损失、多轮对话的掩码构造，以及样本拼接时的跨文档注意力隔离。"],
+      ["c","参数高效微调","包括 LoRA、QLoRA 与 DoRA。工程要点在于秩与目标模块的选择、权重合并策略，以及推理侧的多适配器服务方案。"],
+      ["c","对齐与强化学习","技术路线为：奖励模型配合 PPO（InstructGPT）、DPO（省去奖励模型，直接使用偏好数据对）、GRPO（省去 critic，采用组内相对优势），以及基于可验证奖励的强化学习，后者即 DeepSeek-R1 等推理模型所采用的训练范式。"],
+      ["c","强化学习训练的系统工程","这是当前最具挑战性的系统问题：推理引擎与训练引擎需要共享同一批计算资源，每轮迭代需要完成权重同步（通过 NCCL 广播而非磁盘读写）；此外还需在共置部署与分离部署之间做出选择，并处理长尾 rollout 拖慢整批进度的调度问题。相关框架包括 veRL、OpenRLHF、slime 与 TRL。"],
+      ["c","效果评测","损失值与困惑度不足以反映模型能力；标准评测集存在数据污染问题；以模型作为评判者的方式存在系统性偏差；人工评测与竞技场式评测则面临成本与噪声问题。"],
+      ["c","主流训练框架","<b>torchtitan</b> 实现最为简洁，适合作为源码研读的首选；Megatron-Core 属于工业级实现，复杂度较高；此外还有 DeepSpeed 与 NeMo。后训练可使用 TRL、LLaMA-Factory 或 Axolotl。"],
+      ["h","完成一次 1B 规模预训练","使用 torchtitan 或 FSDP2 在八卡环境下运行，计算模型算力利用率，并对 FSDP、张量并行与流水线并行三种策略进行对比。目标不在于训练效果，而在于获得自有的性能基准数据。"],
+      ["h","完整执行一次后训练流程","以同一基座模型依次完成监督微调、LoRA 微调与 DPO，每一步均进行前后效果对比评测。完整执行一次后，可以对模型定制的实际成本形成准确认识。"],
+      ["h","进行故障恢复演练","在实际集群中主动终止某个节点，验证检查点恢复路径的正确性与恢复耗时。这是训练平台建设中应当优先完成的工作。"],
+      ["t","优化工作的优先级","多数训练性能问题的根源在于数据加载与 IO，而非并行策略。在存储与检查点机制完善之前调整并行参数，属于优先级颠倒。"],
+      ["t","共享存储的缓存配置","分布式文件系统的本地缓存若未设置容量上限，可能写满节点系统盘，进而触发磁盘压力驱逐并导致连锁故障。缓存容量必须显式配置，并预留充分余量。"]
     ]
   },
   {
-    id:"M4", key:"cross", anchor:"PyTorch",
+    id:"M4", ch:"第五章", key:"cross", anchor:"框架工程",
     title:"PyTorch 与 CUDA 工程",
-    lede:"横切模块。推理和训练的性能问题，最终都收敛到这一层的工具和手艺。",
-    why:"这是把「知道原理」变成「能修问题」的那一层。会 profile、会写 kernel、会读 trace，是这个领域最硬的个人壁垒。",
-    node:"执行模型、torch.compile、显存、Triton、profiling。贯穿推理与训练两条主干。",
+    lede:"本章为横切内容。推理与训练中的性能问题，最终均需依靠本章的工具与方法进行定位和解决。",
+    why:"本章是将原理认知转化为问题解决能力的关键环节。掌握性能剖析、内核编写与执行轨迹分析，是该领域较难替代的个人能力。",
+    node:"执行模型、torch.compile、显存管理、Triton 与性能剖析。贯穿推理与训练两条主线。",
     items:[
-      ["c","PyTorch 执行模型","Python → dispatcher → ATen → CUDA kernel。<b>GPU 执行是异步的</b>：<code>.item()</code>、<code>print</code>、<code>.cpu()</code> 都是隐式同步点，会让你的计时和你的性能都变成假的。"],
-      ["c","Autograd 引擎","计算图的构建与释放、<code>no_grad</code>、<code>torch.utils.checkpoint</code>、自定义 <code>autograd.Function</code>。理解激活值为什么会被保留到反向——这是训练显存的主要来源。"],
-      ["c","torch.compile","Dynamo 图捕获与 <b>graph break</b>（性能杀手，用 <code>TORCH_LOGS=graph_breaks</code> 抓）→ AOTAutograd → Inductor 生成 Triton kernel。还要处理动态 shape（<code>mark_dynamic</code>）和编译缓存冷启动。"],
-      ["c","显存管理","caching allocator 的工作方式、碎片问题与 <code>PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True</code>、用 <code>torch.cuda.memory._record_memory_history()</code> 导出 snapshot 做可视化归因。OOM 排查要有固定流程，不是靠调小 batch 撞运气。"],
-      ["c","自定义内核","Triton 入门：三十行写出 fused softmax 或 RMSNorm，配 autotune。往下是 CUDA C++ extension、以及用 <code>torch.library</code> 注册 custom op 让它和 <code>torch.compile</code> 共存。"],
-      ["c","性能剖析工具链","<code>torch.profiler</code> + Perfetto 看时间线；<b>Nsight Systems</b> 看跨卡时间线与通信重叠；<b>Nsight Compute</b> 看单 kernel 的 occupancy 和带宽利用；DCGM 做集群级采集。"],
-      ["c","瓶颈判定流程（背下来）","① GPU 是否有空隙 → dataloader 或 kernel launch 开销；② 有负载则看 roofline → compute-bound 还是 memory-bound；③ 多卡则看通信是否与计算重叠；④ 以上都没问题，才轮到优化单个 kernel。<b>顺序反了就是浪费时间</b>。"],
-      ["c","分布式原语","<code>torch.distributed</code>、DeviceMesh、DTensor（新一代分布式张量抽象，FSDP2 的地基）、<code>torchrun</code> 与弹性伸缩。"],
-      ["c","数据管线","DataLoader worker 数、<code>pin_memory</code>、<code>non_blocking=True</code> 的异步 H2D 拷贝、预取深度。这一段调好经常直接换来两位数百分比的收益。"],
-      ["c","导出与部署","<code>torch.export</code>、AOTInductor、ONNX、torchao 的量化工具链。知道各自适用边界即可。"],
-      ["c","够用的 CUDA 基础","SM / warp / occupancy、shared memory、tensor core、内存层级（寄存器 → L1/shared → L2 → HBM）与各级带宽量级、kernel launch 开销约几微秒。不需要成为 CUDA 专家，需要能看懂 Nsight 的报告。"],
-      ["h","写一个 Triton fused RMSNorm","和 eager PyTorch、和 <code>torch.compile</code> 三方 benchmark，把加速比和带宽利用率都算出来。"],
-      ["h","一次完整的 profile 报告","挑一段你线上真实的推理或训练代码，做完整剖析，写成四段式：<b>瓶颈在哪 → 为什么 → 改了什么 → 快了多少</b>。这份报告是这个模块的毕业证。"],
-      ["t","没有 synchronize 的计时全是假的","GPU 异步执行意味着 <code>time.time()</code> 前后夹一段 CUDA 操作测出来的是 launch 时间，不是执行时间。要么加 <code>torch.cuda.synchronize()</code>，要么用 CUDA event 计时。"]
+      ["c","PyTorch 的执行模型","调用链路为 Python 层、分发器、ATen 算子至 CUDA 内核。<b>GPU 执行是异步的</b>：<code>.item()</code>、<code>print</code> 与 <code>.cpu()</code> 均构成隐式同步点，会导致计时结果与实际性能同时失真。"],
+      ["c","自动微分引擎","涉及计算图的构建与释放、<code>no_grad</code> 上下文、<code>torch.utils.checkpoint</code> 重算机制，以及自定义 <code>autograd.Function</code>。需要理解激活值为何会保留至反向传播阶段，这是训练显存占用的主要来源。"],
+      ["c","torch.compile 编译栈","流程为 Dynamo 图捕获（需关注<b>图中断</b>，可通过 <code>TORCH_LOGS=graph_breaks</code> 定位）、AOTAutograd，以及 Inductor 生成 Triton 内核。此外需处理动态形状（<code>mark_dynamic</code>）与编译缓存的冷启动问题。"],
+      ["c","显存管理","包括缓存分配器的工作机制、碎片问题与 <code>PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True</code> 配置，以及通过 <code>torch.cuda.memory._record_memory_history()</code> 导出快照进行可视化归因。显存溢出的排查应遵循固定流程，而非反复缩小批大小尝试。"],
+      ["c","自定义计算内核","Triton 入门可从实现融合的 softmax 或 RMSNorm 开始，约三十行代码，并配合自动调优。进阶内容包括 CUDA C++ 扩展，以及通过 <code>torch.library</code> 注册自定义算子以保持与 <code>torch.compile</code> 的兼容性。"],
+      ["c","性能剖析工具链","<code>torch.profiler</code> 配合 Perfetto 可查看执行时间线；<b>Nsight Systems</b> 用于观察跨卡时间线与通信重叠情况；<b>Nsight Compute</b> 用于分析单个内核的占用率与带宽利用率；DCGM 用于集群级指标采集。"],
+      ["c","瓶颈定位流程","应按以下顺序排查：首先确认 GPU 时间线是否存在空隙，若存在则问题在数据加载或内核启动开销；其次依据 Roofline 模型判断属于计算受限还是带宽受限；再次在多卡场景下检查通信是否与计算重叠；最后才考虑单个内核的优化。<b>颠倒该顺序将大幅降低排查效率</b>。"],
+      ["c","分布式原语","包括 <code>torch.distributed</code> 通信库、DeviceMesh 设备网格、DTensor 分布式张量抽象（FSDP2 的基础），以及 <code>torchrun</code> 与弹性伸缩机制。"],
+      ["c","数据加载管线","涉及 DataLoader 工作进程数、<code>pin_memory</code> 锁页内存、<code>non_blocking=True</code> 异步主机到设备拷贝，以及预取深度配置。此环节的优化常可带来两位数百分比的性能提升。"],
+      ["c","模型导出与部署","包括 <code>torch.export</code>、AOTInductor、ONNX，以及 torchao 量化工具链。了解各自的适用范围即可。"],
+      ["c","必要的 CUDA 基础","包括流多处理器与线程束、占用率、共享内存、张量核心、存储层级（寄存器、L1 与共享内存、L2、HBM）及各级带宽量级，以及内核启动开销（约数微秒）。本章不要求达到 CUDA 专家水平，但需能够读懂 Nsight 的分析报告。"],
+      ["h","实现一个 Triton 融合内核","以融合 RMSNorm 为例，与 PyTorch 原生实现及 <code>torch.compile</code> 编译结果进行三方性能对比，并计算加速比与带宽利用率。"],
+      ["h","完成一次完整的性能剖析","选取一段实际运行的推理或训练代码进行完整剖析，形成结构化报告，内容包括瓶颈所在环节、成因分析、所做修改与性能提升幅度。该报告可作为本章的学习成果检验。"],
+      ["t","计时方法的正确性","GPU 异步执行意味着，直接在 CUDA 操作前后调用 <code>time.time()</code> 所测得的是内核启动时间而非执行时间。正确做法是显式调用 <code>torch.cuda.synchronize()</code>，或使用 CUDA event 进行计时。"]
     ]
   }
 ];
 
 const STAGES = [
-  ["0","半天","只补 M2 用得上的前置",true,
-   "别等 M0/M1 全学完再来——M2 真正依赖的前置只有三样：KV cache 为什么存在、GQA 怎么压它、prefill 和 decode 有什么不同。读 <code>modeling_llama.py</code> 的 attention 部分，重点跟着 <code>past_key_values</code> 走一遍；然后拿你线上正在跑的那个模型的 <code>config.json</code>，用 <code>2 × L × H_kv × d_head × S × B × dtype</code> 算出每 token 的 KV 占用。",
-   "能用一句话说清「为什么 decode 需要 KV cache」，并报出你线上模型每 token 的 KV 字节数。"],
+  ["阶段 0","约半天","前置知识准备",true,
+   "进入本章无需完成第一、二章的全部内容。推理优化所依赖的前置知识仅有三项：KV Cache 的作用、GQA 对 KV Cache 的压缩方式，以及 prefill 与 decode 两阶段的差异。建议的做法是：阅读 <code>modeling_llama.py</code> 中的注意力部分，重点跟踪 <code>past_key_values</code> 的传递过程；随后取当前环境中正在运行的模型的 <code>config.json</code>，使用公式 <code>2 × L × H_kv × d_head × S × B × dtype</code> 计算其每 token 的 KV Cache 占用。",
+   "能够说明 decode 阶段引入 KV Cache 的原因，并给出所用模型每 token 的 KV Cache 字节数。"],
 
-  ["1","1 天","立住 prefill / decode 二分",true,
-   "这是整个 M2 的钥匙，后面每个技巧都是它的推论。写个二十行脚本，用 HF <code>generate()</code> 分别给两个阶段计时（<b>务必加 <code>torch.cuda.synchronize()</code></b>，否则测的是 launch 时间），画两条线：输入长度 vs TTFT、输出长度 vs 总耗时。再算出你 H200 的 ridge point——算力除以带宽。",
-   "能解释「batch=1 时 nvidia-smi 显示 100% 利用率，但实际算力只用了个位数百分比」这中间到底发生了什么。"],
+  ["阶段 1","约一天","理解 prefill 与 decode 的阶段差异",true,
+   "本阶段是后续全部内容的基础。prefill 阶段将整个提示词一次性前向计算，矩阵规模较大，性能受计算能力限制，决定首 token 延迟；decode 阶段每次仅生成一个 token，矩阵乘法退化为矩阵与向量的乘法，性能受显存带宽限制，决定 token 间延迟。实践方式为：编写一段简短脚本，使用 HuggingFace 的 <code>generate()</code> 接口分别测量两个阶段的耗时（<b>必须调用 <code>torch.cuda.synchronize()</code></b>，否则测得的是内核启动时间而非执行时间），并绘制输入长度与首 token 延迟、输出长度与总耗时两组关系曲线。最后以算力除以带宽，计算所用硬件的性能拐点。",
+   "能够解释以下现象：批大小为一时，nvidia-smi 显示利用率接近百分之百，而实际算力利用率仅为个位数百分比。"],
 
-  ["2","1 天","先有测量能力，再谈优化",true,
-   "刻意放在所有优化动作之前。把 TTFT / TPOT / ITL / goodput 的定义弄准，然后在你现有的 vLLM 部署上跑 <code>vllm bench serve</code>：固定一组输入输出长度分布，扫并发数，画出第一条延迟-吞吐曲线。<b>这条基线是你后面每一个旋钮的对照组</b>，没有它，后面所有实验都说不清是不是真的变快了。",
-   "手上有一张自己集群的基线曲线图，并能指出 knee point 在哪、为什么在那。"],
+  ["阶段 2","约一天","建立性能测量基线",true,
+   "本阶段安排在所有优化措施之前，原因在于：缺少基线数据时，后续任何优化都无法判断其实际效果。首先明确首 token 延迟、token 间延迟、吞吐量与有效吞吐量的定义；随后在现有的 vLLM 部署上执行 <code>vllm bench serve</code>，固定一组输入与输出长度分布，遍历不同并发数，绘制第一组延迟与吞吐关系曲线。该曲线将作为后续全部实验的对照基准。",
+   "获得所在集群的基线延迟与吞吐关系曲线，并能够指出曲线拐点的位置及其成因。"],
 
-  ["3","2 天","KV cache 管理：PagedAttention",false,
-   "读 vLLM 的 SOSP'23 论文。然后手写一个分页 KV 分配器——不接模型，纯数据结构，约一百行：block pool、block table、allocate / free / <code>fork</code>（fork 是前缀共享的关键，别跳过）。写完回到你的部署，开关 prefix caching，用第 2 级的方法量出差异。",
-   "能默画出 block table 的结构，并说清分页分别解决了内部碎片和外部碎片里的哪一部分。"],
+  ["阶段 3","约两天","KV Cache 管理与 PagedAttention",false,
+   "首先阅读 vLLM 的 SOSP 2023 论文，理解分页机制如何消除 KV Cache 的显存碎片。随后实现一个分页 KV 分配器：不接入模型，仅实现数据结构，约一百行代码，包含 block pool、block table，以及 allocate、free、fork 三个操作，其中 fork 是实现前缀共享的关键，不应省略。完成实现后，在实际部署中开启与关闭前缀缓存，使用阶段 2 建立的方法测量两者差异。",
+   "能够独立绘制 block table 的结构，并说明分页机制分别缓解了内部碎片与外部碎片中的哪一部分。"],
 
-  ["4","2 天","批处理与调度：continuous batching",false,
-   "读 Orca (OSDI'22)，抓住请求级调度与批级调度的区别。把第 3 级的分配器接上一个小模型，补一个调度循环——这就是你的迷你引擎 v1。和 HF <code>generate()</code> 做吞吐对比。顺带把 chunked prefill 与抢占策略（recompute vs swap）的概念过一遍。",
-   "迷你引擎吞吐明显高于 HF generate，并且你能指着代码说出高在哪一行。"],
+  ["阶段 4","约两天","请求调度与连续批处理",false,
+   "阅读 Orca（OSDI 2022），理解请求级调度与批级调度的区别。随后将阶段 3 实现的分配器接入一个小型模型，补充调度循环，即构成一个最小可用的推理引擎。将其与 HuggingFace 的 <code>generate()</code> 接口进行吞吐量对比。同时了解分块预填充与抢占策略（重算与换出两种方式）的基本原理。",
+   "所实现引擎的吞吐量明显高于 generate() 接口，且能够指出性能提升来自代码中的哪一部分。"],
 
-  ["5","1–2 天","精读 vLLM V1 源码",false,
-   "带着一个具体问题读，千万别通读：<b>一个请求从进队列到吐出第一个 token，依次经过哪些数据结构？</b>路线是 EngineCore → Scheduler → ModelRunner → attention backend。前面四级里的每个概念，都能在这里找到它的工业级实现——这一级的爽感全靠前面四级换来。",
-   "画出一张请求生命周期的调用链图，标注每一步经手的数据结构。"],
+  ["阶段 5","约一至两天","vLLM V1 源码研读",false,
+   "建议带着一个具体问题进行阅读，不宜通读全部代码。该问题为：<b>一个请求从进入队列到输出首个 token，依次经过哪些数据结构</b>。阅读路径为 EngineCore、Scheduler、ModelRunner 至注意力后端。前四个阶段涉及的每一项概念，均可在此处找到其工业级实现。由于已具备相应基础，本阶段的阅读效率将显著高于在无准备的情况下直接研读源码。",
+   "绘制出请求生命周期的调用链路图，并标注各环节所涉及的数据结构。"],
 
-  ["6","2 天","扫旋钮，用真机说话",false,
-   "现在原理和测量能力都有了，开始做对照实验：FP8 量化（H200 原生支持，当前性价比最高的一档）、chunked prefill 开关、TP size、投机解码。特别去验证投机解码那个反直觉的性质——<b>低并发收益大，高并发因为算力已经饱和反而变亏</b>。亲手测出这条曲线，比读十遍论文管用。",
-   "一张你自己集群的旋钮效果表，每一格都带 TTFT / TPOT / 吞吐三个数。"],
+  ["阶段 6","约两天","配置参数的对照实验",false,
+   "在具备原理基础与测量能力之后，可以开始系统性的参数对照实验，内容包括 FP8 量化（H200 提供原生支持，当前性价比最高）、分块预填充的启用与关闭、张量并行规模，以及投机解码。其中应重点验证投机解码的一项非直观性质：<b>在低并发场景下收益显著，而在高并发场景下由于算力已接近饱和，反而可能造成性能下降</b>。通过实测得到这一曲线，其价值高于反复阅读相关文献。",
+   "形成一份所在集群的参数效果对照表，每项配置均记录首 token 延迟、token 间延迟与吞吐量三项指标。"],
 
-  ["7","按需","进阶：架构级",false,
-   "到这一步再读 DistServe、Splitwise、Mooncake 会非常轻松，因为你已经知道它们各自在解决哪个具体瓶颈。同期看 P/D 分离的工程形态（NVIDIA Dynamo）、KV-aware 路由、多 LoRA 服务（S-LoRA）。",
-   "能对着你现在的集群写出一页纸的架构改进建议，每条都说明预期改善哪个指标。"]
-];
-
-const BOOKMARKS = [
-  ["《大语言模型》综述 + 中文书 (RUCAIBox/LLMSurvey)","github.com/RUCAIBox/LLMSurvey","M1 · 全局",
-   "当地图用，不当教材用。开头把目录读一遍建立词汇表，之后每学完一个模块回来对一次坐标。配套中文书适合通读一遍去掉陌生感。"],
-  ["《Transformers 快速入门》","transformers.run","M1",
-   "M1 的落地手册。看完 nanoGPT 之后用它把 HF 生态（tokenizer / config / 各种 Auto 类）打通，为后面读 modeling_llama.py 铺路。"],
-  ["《大规模语言模型：从理论到实践》(复旦)","intro-llm.github.io","M1 + M3",
-   "唯一一本中文的「原理到训练」体系书，覆盖预训练、SFT、RLHF。当 M1 和 M3 的中文底本，遇到英文论文读不动时回来对照。"],
-  ["Ultra-Scale Playbook 中文版","huggingface.co/spaces/Ki-Seki/ultrascale-playbook-zh-cn","M3 · 核心",
-   "M3 并行策略部分的最佳单一材料，可视化极好。第 9 周直接照着它做，读完能省半年摸索。这是你收藏里含金量最高的一条。"],
-  ["《LLM 面试笔记》(wdndev)","github.com/wdndev/llm_interview_note","自测",
-   "定位是<b>检验工具，不是学习材料</b>。面试题天然碎片化，用它建体系会变成背名词。正确用法：每个模块学完后翻对应章节自测，答不上来的回去补。"],
-  ["MiniMind-V (jingyaogong)","github.com/jingyaogong/minimind-v","M1 动手",
-   "比 nanoGPT 更完整的一条链：从零训一个极小中文模型，pretrain → SFT → LoRA → DPO 全走通。建议顺序是先 nanoGPT 建立最小心智模型，再用 MiniMind 走全链路，最后 -V 版本理解多模态怎么接。"],
-  ["PyTorch 中文教程站","pytorch123.com","M4 入门",
-   "补 API 熟练度用。注意中文站内容普遍滞后于上游，涉及 FSDP2 / DTensor / torch.compile 这些新东西时以官方英文文档为准。"],
-  ["《PyTorch 实用教程》第二版 (TingsongYu)","github.com/TingsongYu/PyTorch-Tutorial-2nd","M4",
-   "M4 前半段的系统教材，工程细节比官方教程扎实。但它止步于「框架怎么用」，M4 真正值钱的 compile 内部 / Triton / Nsight 归因不在里面。"],
-  ["How to Scale Your Model — GPUs 章 (JAX)","jax-ml.github.io/scaling-book/gpus","M0 + M3 · 核心",
-   "被严重低估的一份材料。它用 roofline 的语言把硬件、通信和并行策略串成一套可计算的模型——正好是 M0「算术底座」和 M3「并行策略」之间那座桥。别因为它是 JAX 阵营的就跳过，思维方式完全通用。"]
-];
-
-const UNKNOWN = [
-  "微信公众号文章 (Mzk0ODU3MjcxNA / 2247490382)",
-  "微信公众号文章 (MzU3Mzg5ODgxMg / 2247494525)",
-  "YouTube 视频 (wjZofJX0v4M)"
+  ["阶段 7","按需安排","推理架构进阶",false,
+   "在完成前述阶段后，阅读 DistServe、Splitwise 与 Mooncake 等文献将较为顺畅，因为此时已能够识别各方案所针对的具体瓶颈。同期可以了解 prefill 与 decode 分离部署的工程形态（如 NVIDIA Dynamo）、基于 KV Cache 感知的请求路由，以及多 LoRA 适配器服务。",
+   "能够针对现有集群提出一份架构改进建议，并说明每项建议预期改善的具体指标。"]
 ];
 
 const WEEKS = [
-  ["W1","算术底座 + nanoGPT","三个公式抄成便签；nanoGPT 在本机跑出通顺文本"],
-  ["W2","手写 attention 与 KV cache","闭卷写出带 KV cache 的 GQA 前向；手算 Llama-3-70B 的显存账"],
-  ["W3","模型结构精读","读完 modeling_llama.py；产出 MHA/GQA/MLA/MoE 的结构与成本对比表"],
-  ["W4","prefill/decode 二分 + roofline","算出你的 H200 ridge point；迷你引擎 v1（朴素 KV cache）"],
-  ["W5","分页与连续批处理","迷你引擎 v2；与 HF generate 的吞吐对比数据"],
-  ["W6","vLLM 源码 + 真机压测","一张请求生命周期的调用链图；TP × 量化的延迟-吞吐曲线族"],
-  ["W7","量化与投机解码","量化精度-速度权衡表；投机解码在不同 batch 下的收益曲线"],
-  ["W8","调度与 P/D 分离","读 Orca / PagedAttention / DistServe；写一页你自己集群的架构改进建议"],
-  ["W9","并行策略与显存账","五种并行的通信量对照表；torchtitan 跑通 1B 预训练并算出 MFU"],
-  ["W10","profiling 与 Triton","Triton RMSNorm benchmark；一份四段式性能剖析报告"],
-  ["W11","后训练链路","同一基座走完 SFT → LoRA → DPO，附前后评测对比"],
-  ["W12","RL 训练系统 + 复盘","读 veRL 架构；写一篇自己的技术总结，检验哪些地方讲不清楚"]
+  ["第 1 周","计算基础与 nanoGPT 实践","掌握三个估算公式；nanoGPT 在本地训练至可生成通顺文本"],
+  ["第 2 周","注意力机制与 KV Cache 实现","独立实现带 KV Cache 的 GQA 前向计算；完成 Llama-3-70B 的显存估算"],
+  ["第 3 周","模型结构研读","完成 modeling_llama.py 研读；形成 MHA、GQA、MLA 与 MoE 的结构与成本对比表"],
+  ["第 4 周","两阶段特性与性能基线","完成硬件性能拐点计算；建立集群的基线延迟与吞吐关系曲线"],
+  ["第 5 周","KV Cache 管理与连续批处理","完成最小推理引擎实现；获得与 generate() 接口的吞吐量对比数据"],
+  ["第 6 周","vLLM 源码研读与集群压测","请求生命周期调用链路图；张量并行与量化组合的曲线族"],
+  ["第 7 周","量化与投机解码实测","量化的精度与性能对照表；投机解码在不同并发下的收益曲线"],
+  ["第 8 周","调度机制与分离部署","完成 Orca、PagedAttention 与 DistServe 研读；形成集群架构改进建议"],
+  ["第 9 周","并行策略与显存规划","五种并行策略的通信量对照表；使用 torchtitan 完成 1B 预训练并计算 MFU"],
+  ["第 10 周","性能剖析与 Triton 实践","Triton RMSNorm 的性能对比数据；一份完整的性能剖析报告"],
+  ["第 11 周","后训练流程","以同一基座完成监督微调、LoRA 与 DPO，附前后效果对比"],
+  ["第 12 周","强化学习训练系统与复盘","完成 veRL 架构研读；撰写技术总结以检验掌握程度"]
 ];
 
 const PAPERS = [
-  ["必读 · 模型",[
-    ["2017","Attention Is All You Need","Transformer 原始论文，一切的起点"],
-    ["2020","Scaling Laws for Neural LMs","Kaplan 等，性能与算力/数据的幂律"],
-    ["2022","Training Compute-Optimal LLMs","Chinchilla，纠正了参数量崇拜"],
-    ["2021","RoFormer (RoPE)","当今几乎所有开源模型的位置编码"],
-    ["2023","GQA","KV cache 压缩的工业标准解法"],
-    ["2023","LLaMA / Llama 2","开源模型的工程配方基准"]
+  ["必读 · 模型结构",[
+    ["2017","Attention Is All You Need","Transformer 原始论文，后续全部工作的基础"],
+    ["2020","Scaling Laws for Neural Language Models","模型性能与算力、数据之间的幂律关系"],
+    ["2022","Training Compute-Optimal LLMs","即 Chinchilla，修正了此前对参数量的过度侧重"],
+    ["2021","RoFormer（RoPE）","当前几乎全部开源模型采用的位置编码方案"],
+    ["2023","GQA","KV Cache 压缩的工业标准方案"],
+    ["2023","LLaMA / Llama 2","开源模型的工程配置基准"]
   ]],
-  ["必读 · 推理",[
-    ["2022","FlashAttention","IO-aware attention，推理训练通吃"],
-    ["2023","FlashAttention-2","并行划分优化，实际部署用的版本"],
-    ["2022","Orca (OSDI)","连续批处理的源头"],
-    ["2023","PagedAttention / vLLM (SOSP)","KV 分页，推理系统的分水岭"],
+  ["必读 · 推理系统",[
+    ["2022","FlashAttention","IO 感知的注意力实现，训练与推理均适用"],
+    ["2023","FlashAttention-2","并行划分优化，实际部署所采用的版本"],
+    ["2022","Orca（OSDI）","连续批处理机制的提出"],
+    ["2023","PagedAttention / vLLM（SOSP）","KV Cache 分页管理，推理系统的分水岭"],
     ["2023","Speculative Decoding","投机解码的理论基础"],
-    ["2024","DistServe / Splitwise","P/D 分离，当前架构演进主线"]
+    ["2024","DistServe / Splitwise","prefill 与 decode 分离部署，当前架构演进主线"]
   ]],
-  ["必读 · 训练",[
-    ["2019","ZeRO","显存切分三级，FSDP 的思想源头"],
-    ["2019","Megatron-LM","张量并行的标准做法"],
-    ["2021","Efficient Large-Scale Training (3D)","并行策略组合与拓扑映射"],
-    ["2022","InstructGPT","RLHF 的完整工程描述"],
-    ["2023","DPO","去掉 reward model 的对齐方法"],
-    ["2025","DeepSeek-R1","RLVR 与推理模型训练范式"]
+  ["必读 · 训练系统",[
+    ["2019","ZeRO","显存三级切分，FSDP 的思想来源"],
+    ["2019","Megatron-LM","张量并行的标准实现方式"],
+    ["2021","Efficient Large-Scale Training","多维并行策略的组合与拓扑映射"],
+    ["2022","InstructGPT","RLHF 流程的完整工程描述"],
+    ["2023","DPO","省去奖励模型的对齐方法"],
+    ["2025","DeepSeek-R1","基于可验证奖励的推理模型训练范式"]
   ]],
-  ["扩展 · 按需翻阅",[
-    ["2024","MLA / DeepSeek-V2","KV cache 的低秩压缩路线"],
-    ["2024","DeepSeek-V3","MoE + FP8 + DualPipe 的系统工程范本"],
-    ["2024","Mooncake","以 KV cache 为中心的服务架构"],
+  ["扩展 · 按需查阅",[
+    ["2024","MLA / DeepSeek-V2","KV Cache 的低秩压缩路线"],
+    ["2024","DeepSeek-V3","MoE、FP8 与 DualPipe 的系统工程范本"],
+    ["2024","Mooncake","以 KV Cache 为中心的服务架构"],
     ["2023","RadixAttention / SGLang","前缀树复用与结构化输出"],
-    ["2023","AWQ / GPTQ / SmoothQuant","量化三条主流路线"],
-    ["2024","EAGLE / Medusa","高接受率投机解码"],
-    ["2021","LoRA","低秩微调，PEFT 的基石"],
-    ["2023","QLoRA","4bit 量化 + LoRA，单卡微调大模型"],
-    ["2023","Ring Attention","超长上下文的序列并行"],
-    ["2024","GRPO / DeepSeekMath","去 critic 的 RL，当前主流"],
-    ["2023","StreamingLLM / H2O","KV cache 压缩与淘汰策略"],
-    ["2022","µTransfer (µP)","超参从小模型迁移到大模型"]
+    ["2023","AWQ / GPTQ / SmoothQuant","量化的三条主流技术路线"],
+    ["2024","EAGLE / Medusa","高接受率的投机解码方案"],
+    ["2021","LoRA","低秩微调，参数高效微调的基础"],
+    ["2023","QLoRA","4bit 量化配合 LoRA，单卡微调大模型"],
+    ["2023","Ring Attention","超长上下文的序列并行方案"],
+    ["2024","GRPO / DeepSeekMath","省去 critic 的强化学习方法"],
+    ["2023","StreamingLLM / H2O","KV Cache 压缩与淘汰策略"],
+    ["2022","µTransfer（µP）","超参数从小模型向大模型的迁移方法"]
   ]]
 ];
 
+const BOOKMARKS = [
+  ["《大语言模型》综述与配套中文书","github.com/RUCAIBox/LLMSurvey","第二章 · 全局",
+   "宜作为知识地图使用，不宜作为主教材。建议先通读目录以建立术语框架，此后每完成一章返回核对一次覆盖范围。配套中文书可通读一遍，用于消除对领域术语的陌生感。"],
+  ["《Transformers 快速入门》","transformers.run","第二章",
+   "第二章的实践配套材料。建议在运行 nanoGPT 之后阅读，用于掌握 HuggingFace 生态的基本用法（分词器、配置类与各类 Auto 接口），为后续研读 modeling_llama.py 做准备。"],
+  ["《大规模语言模型：从理论到实践》","intro-llm.github.io","第二章 · 第四章",
+   "目前少有的系统覆盖原理与训练全流程的中文教材，内容包含预训练、监督微调与 RLHF。可作为第二章与第四章的中文底本，在英文文献阅读受阻时用于对照。"],
+  ["Ultra-Scale Playbook 中文版","huggingface.co/spaces/Ki-Seki/ultrascale-playbook-zh-cn","第四章 · 核心",
+   "第四章并行策略部分最合适的单一材料，可视化程度高。建议在第九周直接依据该材料开展学习。就并行策略这一主题而言，是已有资料中价值最高的一份。"],
+  ["《LLM 面试笔记》","github.com/wdndev/llm_interview_note","自测",
+   "其定位为<b>检验工具而非学习材料</b>。面试题形式的内容天然缺乏体系性，以此为主线容易停留在术语记忆层面。建议的用法是：每完成一章后查阅对应章节进行自测，对回答不上的部分返回补充。"],
+  ["MiniMind 与 MiniMind-V","github.com/jingyaogong/minimind-v","第二章 · 实践",
+   "相比 nanoGPT 提供了更完整的链路：从零训练一个小规模中文模型，覆盖预训练、监督微调、LoRA 与 DPO 全流程。建议的顺序是先通过 nanoGPT 建立最小认知模型，再以 MiniMind 走通完整链路，最后通过 -V 版本理解多模态的接入方式。"],
+  ["PyTorch 中文教程站","pytorch123.com","第五章 · 入门",
+   "用于补充框架 API 的熟练度。需注意中文站点内容普遍滞后于上游，涉及 FSDP2、DTensor 与 torch.compile 等较新内容时，应以官方英文文档为准。"],
+  ["《PyTorch 实用教程》第二版","github.com/TingsongYu/PyTorch-Tutorial-2nd","第五章",
+   "第五章前半部分的系统教材，工程细节较官方教程更为充分。但其内容止于框架的使用方法，未覆盖 torch.compile 内部机制、Triton 内核编写与 Nsight 性能归因，而这些是第五章的核心部分。"],
+  ["How to Scale Your Model（GPU 章节）","jax-ml.github.io/scaling-book/gpus","第一章 · 第四章 · 核心",
+   "价值容易被低估的一份材料。它以 Roofline 模型的语言将硬件特性、通信开销与并行策略整合为一套可计算的分析框架，恰好衔接第一章的成本估算与第四章的并行策略。虽出自 JAX 生态，但其分析方法完全通用，不应因框架差异而跳过。"]
+];
+
+const UNKNOWN = [
+  "微信公众号文章（Mzk0ODU3MjcxNA / 2247490382）",
+  "微信公众号文章（MzU3Mzg5ODgxMg / 2247494525）",
+  "YouTube 视频（wjZofJX0v4M）"
+];
+
 const RES = [
-  ["补 M2 推理（最大缺口）",[
-    ["","vLLM 源码 + V1 设计文档","没有替代品。带着「一个请求从入队到吐出首 token 经过哪些数据结构」这个问题读 EngineCore 与 Scheduler"],
-    ["","SGLang 源码与 RadixAttention 博客","对照读，能看出推理架构设计上不同的取舍"],
-    ["","PagedAttention (SOSP'23) + Orca (OSDI'22)","推理系统的两篇奠基论文，精读到能复述机制"],
-    ["","vLLM / SGLang 的 benchmark 脚本","直接在你的 H200 池上跑，压测方法论是从这里学的"],
-    ["","NVIDIA Dynamo 与 Mooncake 的设计文档","P/D 分离的工程落地形态"]
+  ["补充第三章：推理系统",[
+    ["","vLLM 源码与 V1 设计文档","该方向无替代材料。建议带着「请求从入队到输出首 token 经过哪些数据结构」这一问题研读 EngineCore 与 Scheduler"],
+    ["","SGLang 源码与 RadixAttention 相关文档","与 vLLM 对照阅读，可以看出推理架构设计上的不同取舍"],
+    ["","PagedAttention（SOSP 2023）与 Orca（OSDI 2022）","推理系统的两篇奠基性论文，建议精读至能够复述其机制"],
+    ["","vLLM 与 SGLang 的压测脚本","可直接在自有集群上运行，压测方法论主要从此处习得"],
+    ["","NVIDIA Dynamo 与 Mooncake 的设计文档","prefill 与 decode 分离部署的工程实现形态"]
   ]],
-  ["补 M4 深水区",[
-    ["","GPU MODE (原 CUDA MODE) 讲座与 Discord","Triton、CUDA kernel、profiling 的最佳实践集散地，中文圈基本没有对应物"],
-    ["","Triton 官方 tutorials","从 vector add 到 fused attention，六个例子写完就入门了"],
-    ["","PyTorch 官方 torch.compile 与 profiler 文档","中文教程都不覆盖这一段，只能读英文原文"],
-    ["","Nsight Systems / Compute 快速上手","会读时间线，才能判断通信有没有和计算重叠"]
+  ["补充第五章：框架性能工程",[
+    ["","GPU MODE 讲座与社区","Triton、CUDA 内核与性能剖析的实践资料集散地，中文资料中缺乏对应内容"],
+    ["","Triton 官方教程","从向量加法到融合注意力共六个示例，完成后即可入门"],
+    ["","PyTorch 官方 torch.compile 与 profiler 文档","中文教程未覆盖这一部分，只能阅读英文原文"],
+    ["","Nsight Systems 与 Nsight Compute 入门材料","能够读懂执行时间线，才能判断通信与计算是否重叠"]
   ]],
-  ["补 M3 基础设施与 RL 系统",[
-    ["","torchtitan 源码","最干净的分布式预训练实现，含分布式 checkpoint 的正确写法"],
-    ["","veRL 架构文档与源码","rollout 引擎与训练引擎共存、权重同步，当前最活跃的系统方向"],
-    ["","主流模型的 tech report","Llama / Qwen / DeepSeek / Kimi 的报告里训练基础设施细节最多"]
+  ["补充第四章：基础设施与强化学习系统",[
+    ["","torchtitan 源码","实现最为简洁的分布式预训练方案，包含分布式检查点的正确实现方式"],
+    ["","veRL 架构文档与源码","推理引擎与训练引擎共存、权重同步等问题，是当前最活跃的系统方向"],
+    ["","主流模型的技术报告","Llama、Qwen、DeepSeek 与 Kimi 的报告中训练基础设施细节较为丰富"]
   ]],
   ["长期跟踪",[
-    ["","vLLM / SGLang 的 RFC 与 design doc","比论文更新更快，且都是真问题"],
-    ["","PyTorch dev-discuss 论坛","compile、FSDP2、DTensor 的第一手设计讨论"],
-    ["","Stanford CS336《LM from Scratch》","唯一系统覆盖「从零造 LLM 全栈」的公开课，作业质量极高"],
-    ["","Karpathy《Zero to Hero》系列","从反向传播手推到 GPT，入门无可替代"]
+    ["","vLLM 与 SGLang 的 RFC 与设计文档","更新速度快于论文，且所讨论的均为实际问题"],
+    ["","PyTorch dev-discuss 论坛","torch.compile、FSDP2 与 DTensor 的一手设计讨论"],
+    ["","Stanford CS336《Language Modeling from Scratch》","目前系统覆盖大模型全栈实现的公开课程，作业质量较高"],
+    ["","Karpathy《Neural Networks: Zero to Hero》","从反向传播推导至 GPT 实现，入门阶段的重要材料"]
   ]]
 ];
 
 /* ---------- render ---------- */
-const el = (t,c,h)=>{const e=document.createElement(t); if(c)e.className=c; if(h!==undefined)e.innerHTML=h; return e;};
-const TAGNAME = {c:"概念", h:"动手", t:"坑"};
+const el=(t,c,h)=>{const e=document.createElement(t); if(c)e.className=c; if(h!==undefined)e.innerHTML=h; return e;};
+const TAGNAME={c:"原理",h:"实践",t:"要点"};
 
-// toc
-const toc = document.getElementById("toc");
-M.forEach(m=>{
-  const a = el("a"); a.href = "#" + m.anchor;
-  a.innerHTML = '<span class="n">'+m.id+'</span>'+m.title;
-  toc.appendChild(a);
+// 目录
+const toc=document.getElementById("toc");
+[["导言","0","导言"],["结构","1","知识体系结构"]].forEach(([h,n,t])=>{
+  const a=el("a"); a.href="#"+h; a.innerHTML='<span class="n">'+n+'</span>'+t; toc.appendChild(a);
 });
-[["路线","十二周路线"],["论文","论文清单"],["资源","资源"]].forEach(([h,t])=>{
-  const a = el("a"); a.href="#"+h; a.innerHTML='<span class="n">→</span>'+t; toc.appendChild(a);
+M.forEach((m,i)=>{
+  const a=el("a"); a.href="#"+m.anchor;
+  a.innerHTML='<span class="n">'+m.id+'</span>'+m.title; toc.appendChild(a);
+});
+[["计划","3","十二周计划"],["资料","4","参考资料"]].forEach(([h,n,t])=>{
+  const a=el("a"); a.href="#"+h; a.innerHTML='<span class="n">'+n+'</span>'+t; toc.appendChild(a);
 });
 
-// overview tiers
-const tiers = document.getElementById("tiers");
+// 依赖关系图
+const tiers=document.getElementById("tiers");
 function nodeCard(m){
-  const a = el("a","node"); a.href="#"+m.anchor; a.dataset.k=m.key;
-  a.innerHTML = '<div class="node-id">'+m.id+'</div><div class="node-t">'+m.title+'</div><div class="node-d">'+m.node+'</div>';
+  const a=el("a","node"); a.href="#"+m.anchor; a.dataset.k=m.key;
+  a.innerHTML='<div class="node-id">'+m.id+' · '+m.ch+'</div><div class="node-t">'+m.title+'</div><div class="node-d">'+m.node+'</div>';
   return a;
 }
-function tier(label, mods, cls){
-  const t = el("div","tier");
-  t.appendChild(el("div","tier-head",label));
-  const r = el("div","tier-row "+cls);
-  mods.forEach(m=>r.appendChild(nodeCard(m)));
-  t.appendChild(r);
-  return t;
+function tier(label,mods,cls){
+  const t=el("div","tier"); t.appendChild(el("div","tier-head",label));
+  const r=el("div","tier-row "+cls); mods.forEach(m=>r.appendChild(nodeCard(m)));
+  t.appendChild(r); return t;
 }
-tiers.appendChild(tier("地基 · 必须先过", [M[0],M[1]], "two"));
+tiers.appendChild(tier("基础层 · 须先行完成",[M[0],M[1]],"two"));
 tiers.appendChild(el("div","connector"));
-tiers.appendChild(tier("两条主干 · 可并行推进，推理优先", [M[2],M[3]], "two"));
+tiers.appendChild(tier("主干层 · 二者无依赖，可并行推进",[M[2],M[3]],"two"));
 tiers.appendChild(el("div","connector"));
-tiers.appendChild(tier("横切 · 贯穿两条主干，边学边用", [M[4]], "one"));
+tiers.appendChild(tier("横切层 · 贯穿两条主干，随用随学",[M[4]],"one"));
 
-// modules
-const mods = document.getElementById("modules");
-
+// 章节
+const mods=document.getElementById("modules");
 function buildLadder(){
-  const box = document.createElement("div");
-  const lad = el("div","ladder");
+  const box=document.createElement("div");
+  const lad=el("div","ladder");
   STAGES.forEach(([n,dur,title,now,what,gate],i)=>{
-    if(i===3) lad.appendChild(el("div","weekcut","本周到这里为止就够了 · 下面是接下来两周"));
-    const d = el("div","stage"+(now?" now":""));
-    d.innerHTML = '<div class="st-rail"><div class="st-n">'+n+'</div><div class="st-dur">'+dur+'</div></div>'
-      + '<div class="st-body"><h3>'+title+'</h3><p>'+what+'</p>'
-      + '<div class="gate"><b>验收</b><span>'+gate+'</span></div></div>';
+    if(i===3) lad.appendChild(el("div","weekcut","以上三个阶段构成第一周的学习内容"));
+    const d=el("div","stage"+(now?" now":""));
+    d.innerHTML='<div class="st-rail"><div class="st-n">'+n+'</div><div class="st-dur">'+dur+'</div></div>'
+      +'<div class="st-body"><h4>'+title+'</h4><p>'+what+'</p>'
+      +'<div class="gate"><b>验收标准</b><span>'+gate+'</span></div></div>';
     lad.appendChild(d);
   });
   box.appendChild(lad);
   box.appendChild(el("p","afterladder",
-    '爬完这架梯子，再回到下面的主题清单把剩下的概念补齐——那时候它们大多会变成「哦，这个我见过」。这条阶梯同时替代了十二周路线里的 W4–W8。'));
+    "完成上述各阶段后，可返回下方主题详解补齐其余概念。届时多数概念已在实践中接触过，理解成本将显著降低。本路径对应第三部分十二周计划中的第四至第八周。"));
   return box;
 }
-
 function buildTopics(m){
-  const list = el("div","topics");
+  const list=el("div","topics");
   m.items.forEach(([k,h,d])=>{
-    const it = el("div","topic");
-    it.innerHTML = '<span class="tag '+k+'">'+TAGNAME[k]+'</span><div><h3>'+h+'</h3><p>'+d+'</p></div>';
+    const it=el("div","topic");
+    it.innerHTML='<span class="tag '+k+'">'+TAGNAME[k]+'</span><div><h4>'+h+'</h4><p>'+d+'</p></div>';
     list.appendChild(it);
   });
   return list;
 }
-
-function colhead(kicker, desc, now){
-  return el("div","colhead"+(now?" now":""),
-    '<span class="k">'+kicker+'</span><span class="d">'+desc+'</span>');
+function colhead(k,d,now){
+  return el("div","colhead"+(now?" now":""),'<span class="k">'+k+'</span><span class="d">'+d+'</span>');
 }
-
 M.forEach(m=>{
-  const s2 = el("section","module"); s2.id = m.anchor;
-  const rail = el("div","rail");
-  rail.innerHTML = '<p class="rail-id">'+m.id
-    + (m.ladder?'<span class="weekmark">本周开始</span>':'')+'</p>'
-    + '<h2>'+m.title+'</h2><p>'+m.lede+'</p>'
-    + '<div class="why"><b>为什么值得学</b>'+m.why+'</div>';
-
-  const col = el("div","modcol");
+  const sec=el("section","module"); sec.id=m.anchor;
+  const rail=el("div","rail");
+  rail.innerHTML='<p class="rail-id">'+m.ch+' · '+m.id+'</p><h3>'+m.title+'</h3><p>'+m.lede+'</p>'
+    +'<div class="why"><b>学习价值</b>'+m.why+'</div>';
+  const col=el("div","modcol");
   if(m.ladder){
-    const b1 = el("div","colblock");
-    b1.appendChild(colhead("入门路径 · 串行",
-      "八级，每级带验收标准，过不了别往上爬。约十到十一天有效时间。", true));
-    b1.appendChild(buildLadder());
-    col.appendChild(b1);
-
-    const b2 = el("div","colblock");
-    b2.appendChild(colhead("全部主题 · 参考", "M2 的完整版图，当索引查，不必按顺序读。", false));
-    b2.appendChild(buildTopics(m));
-    col.appendChild(b2);
+    const b1=el("div","colblock");
+    b1.appendChild(colhead("3.1 入门路径",
+      "共八个阶段，须按顺序进行。每阶段设有验收标准，未达成前不宜进入下一阶段。合计约需十至十一天有效学习时间。",true));
+    b1.appendChild(buildLadder()); col.appendChild(b1);
+    const b2=el("div","colblock");
+    b2.appendChild(colhead("3.2 主题详解","本章涉及的全部主题，供按需查阅，不必按顺序阅读。",false));
+    b2.appendChild(buildTopics(m)); col.appendChild(b2);
   } else {
     col.appendChild(buildTopics(m));
   }
-
-  s2.appendChild(rail); s2.appendChild(col);
-  mods.appendChild(s2);
+  sec.appendChild(rail); sec.appendChild(col); mods.appendChild(sec);
 });
 
-// weeks
-const wb = document.getElementById("weeks");
+// 十二周计划
+const wb=document.getElementById("weeks");
 WEEKS.forEach(([w,t,o])=>{
-  const tr = el("tr");
-  tr.innerHTML = '<td class="wk">'+w+'</td><td>'+t+'</td><td class="out">'+o+'</td>';
+  const tr=el("tr");
+  tr.innerHTML='<td class="wk">'+w+'</td><td>'+t+'</td><td class="out">'+o+'</td>';
   wb.appendChild(tr);
 });
 
-// papers + resources
-function groups(target, data){
-  const c = document.getElementById(target);
-  data.forEach(([title, rows])=>{
-    const g = el("div","pgroup");
-    g.appendChild(el("h4",null,title));
-    const ul = el("ul");
+// 已有资料
+const bmb=document.getElementById("bookmarks");
+BOOKMARKS.forEach(([name,url,mod,use])=>{
+  const tr=el("tr");
+  tr.innerHTML='<td class="bm"><b>'+name+'</b><span>'+url+'</span></td><td class="mod">'+mod+'</td><td>'+use+'</td>';
+  bmb.appendChild(tr);
+});
+(function(){
+  const tr=el("tr");
+  tr.innerHTML='<td class="bm"><b>未能核实的三份材料</b><span>'+UNKNOWN.join('<br>')+'</span></td>'
+    +'<td class="mod">待定</td>'
+    +'<td>微信公众号链接需要登录后访问，视频链接在当前网络环境下无法获取标题，因此无法判断其内容，暂不列入上表。补充标题后即可归入相应章节。</td>';
+  bmb.appendChild(tr);
+})();
+
+// 论文与资源
+function groups(target,data){
+  const c=document.getElementById(target);
+  data.forEach(([title,rows])=>{
+    const g=el("div","pgroup"); g.appendChild(el("h4",null,title));
+    const ul=el("ul");
     rows.forEach(([yr,name,note])=>{
-      const li = el("li");
-      li.innerHTML = (yr?'<span class="yr">'+yr+'</span>':'') + '<b>'+name+'</b><span class="nb">'+note+'</span>';
+      const li=el("li");
+      li.innerHTML=(yr?'<span class="yr">'+yr+'</span>':'')+'<b>'+name+'</b><span class="nb">'+note+'</span>';
       ul.appendChild(li);
     });
     g.appendChild(ul); c.appendChild(g);
   });
 }
-groups("papers", PAPERS);
-groups("resources", RES);
+groups("papers",PAPERS);
+groups("resources",RES);
 </script>
